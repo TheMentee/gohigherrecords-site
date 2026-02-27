@@ -7,264 +7,357 @@
   <meta name="description" content="GoHigher Records distributes your music to Spotify, Apple Music, TikTok, Beatport, and 15+ platforms. 18–33% cheaper than the competition. Powered by GoHigherDash." />
   <meta property="og:title" content="GoHigher Records — Distribute Your Music Worldwide" />
   <meta property="og:description" content="Get your music on every major platform in 48 hours. Starter plans from $49/mo." />
+  <meta property="og:image" content="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gohigherrecords.com" />
+  <link rel="icon" type="image/png" href="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --purple: #a855f7;
-      --pink: #ec4899;
-      --cyan: #22d3ee;
-      --orange: #f97316;
-      --bg: #050508;
-      --card: rgba(255,255,255,0.04);
-      --border: rgba(168,85,247,0.25);
-      --text: #e2e8f0;
-      --muted: #94a3b8;
+      --cyan: #00f0ff;
+      --cyan-dim: #00c8d4;
+      --blue: #3b82f6;
+      --purple: #7c3aed;
+      --cyan-glow: rgba(0,240,255,0.18);
+      --blue-glow: rgba(59,130,246,0.15);
+      --bg: #060b14;
+      --bg2: #0a1120;
+      --card: rgba(0,240,255,0.04);
+      --border: rgba(0,240,255,0.18);
+      --border-strong: rgba(0,240,255,0.4);
+      --text: #e2f4ff;
+      --muted: #7ba3be;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    /* NOISE */
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0;
     }
-    .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; animation: orb-pulse 8s ease-in-out infinite; }
-    .orb-1 { width: 600px; height: 600px; background: rgba(168,85,247,0.12); top: -200px; left: -200px; }
-    .orb-2 { width: 500px; height: 500px; background: rgba(236,72,153,0.10); bottom: 10%; right: -150px; animation-delay: 3s; }
-    .orb-3 { width: 400px; height: 400px; background: rgba(34,211,238,0.07); top: 40%; left: 50%; animation-delay: 5s; }
-    @keyframes orb-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.1)} }
+
+    /* ORBS */
+    .orb { position: fixed; border-radius: 50%; filter: blur(130px); pointer-events: none; z-index: 0; animation: orb-float 10s ease-in-out infinite; }
+    .orb-1 { width: 700px; height: 700px; background: rgba(0,240,255,0.07); top: -250px; left: -250px; }
+    .orb-2 { width: 500px; height: 500px; background: rgba(59,130,246,0.08); bottom: 5%; right: -200px; animation-delay: 4s; }
+    .orb-3 { width: 400px; height: 400px; background: rgba(124,58,237,0.06); top: 45%; left: 45%; animation-delay: 7s; }
+    @keyframes orb-float { 0%,100%{opacity:1;transform:scale(1) translateY(0)} 50%{opacity:.7;transform:scale(1.08) translateY(-20px)} }
+
+    /* GRID LINES */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(5,5,8,0.8); backdrop-filter: blur(20px);
+      padding: .85rem 2rem;
+      background: rgba(6,11,20,0.85); backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border);
       transition: background .3s;
     }
-    .nav-logo { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.15rem; text-decoration: none; color: white; }
-    .nav-logo svg { width: 26px; height: 26px; animation: spin 4s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
-    .nav-links a:hover { color: white; }
-    .nav-cta {
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: white; border: none; padding: .55rem 1.4rem; border-radius: 8px;
-      font-weight: 600; font-size: .9rem; cursor: pointer; text-decoration: none;
-      transition: opacity .2s, transform .2s;
+    .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+    .nav-logo img {
+      width: 42px; height: 42px; object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(0,240,255,0.6));
+      animation: logo-glow 3s ease-in-out infinite;
     }
-    .nav-cta:hover { opacity: .85; transform: translateY(-1px); }
+    @keyframes logo-glow {
+      0%,100% { filter: drop-shadow(0 0 10px rgba(0,240,255,0.6)); }
+      50% { filter: drop-shadow(0 0 20px rgba(0,240,255,0.9)) drop-shadow(0 0 40px rgba(59,130,246,0.4)); }
+    }
+    .nav-brand { font-size: 1.1rem; font-weight: 800; letter-spacing: -.01em; }
+    .nav-brand span:first-child { color: var(--cyan); }
+    .nav-brand span:last-child { color: white; font-weight: 500; font-size: .95rem; display: block; line-height: 1; letter-spacing: .05em; font-size: .7rem; color: var(--muted); text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .875rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: .5rem 1.4rem; border-radius: 6px;
+      font-weight: 700; font-size: .875rem; cursor: pointer; text-decoration: none;
+      transition: background .2s, box-shadow .2s, transform .2s;
+      box-shadow: 0 0 12px rgba(0,240,255,0.2);
+    }
+    .nav-cta:hover { background: rgba(0,240,255,0.1); box-shadow: 0 0 25px rgba(0,240,255,0.4); transform: translateY(-1px); }
 
     /* HERO */
     .hero {
       position: relative; z-index: 1; min-height: 100vh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 8rem 2rem 5rem;
+      text-align: center; padding: 9rem 2rem 5rem;
+    }
+    .hero-logo-wrap {
+      margin-bottom: 2rem;
+      animation: hero-logo-in 1s ease-out;
+    }
+    @keyframes hero-logo-in { from { opacity: 0; transform: scale(0.7) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .hero-logo {
+      width: 140px; height: 140px; object-fit: contain;
+      filter: drop-shadow(0 0 30px rgba(0,240,255,0.7)) drop-shadow(0 0 60px rgba(59,130,246,0.4));
+      animation: logo-glow 3s ease-in-out infinite;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4);
-      border-radius: 100px; padding: .4rem 1rem; font-size: .8rem; font-weight: 600;
-      color: var(--purple); margin-bottom: 1.5rem; letter-spacing: .05em; text-transform: uppercase;
+      background: rgba(0,240,255,0.08); border: 1px solid rgba(0,240,255,0.35);
+      border-radius: 100px; padding: .4rem 1.1rem; font-size: .78rem; font-weight: 600;
+      color: var(--cyan); margin-bottom: 1.5rem; letter-spacing: .08em; text-transform: uppercase;
+      animation: fade-up 1s ease-out .2s both;
     }
-    .hero-badge .dot { width: 6px; height: 6px; background: var(--purple); border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
+    .hero-badge .dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: blink 1.5s ease-in-out infinite; box-shadow: 0 0 6px var(--cyan); }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-    .hero h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -.03em; margin-bottom: 1.5rem; }
-    .grad { background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 50%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero p { font-size: clamp(1rem, 2.5vw, 1.2rem); color: var(--muted); max-width: 600px; line-height: 1.7; margin-bottom: 2.5rem; }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6.5vw, 5.2rem); font-weight: 900; line-height: 1.05;
+      letter-spacing: -.03em; margin-bottom: 1.5rem;
+      animation: fade-up 1s ease-out .35s both;
+    }
+    .grad-cyan {
+      background: linear-gradient(135deg, var(--cyan) 0%, #60a5fa 50%, var(--cyan) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+    .hero p {
+      font-size: clamp(.95rem, 2.2vw, 1.15rem); color: var(--muted); max-width: 580px;
+      line-height: 1.75; margin-bottom: 2.5rem;
+      animation: fade-up 1s ease-out .5s both;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3.5rem; animation: fade-up 1s ease-out .65s both; }
     .btn-primary {
-      background: linear-gradient(135deg, var(--purple), var(--pink)); color: white; border: none;
-      padding: .9rem 2.2rem; border-radius: 10px; font-weight: 700; font-size: 1rem;
-      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #060b14; border: none; padding: .9rem 2.2rem; border-radius: 8px;
+      font-weight: 800; font-size: 1rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
       transition: opacity .2s, transform .2s, box-shadow .2s;
-      box-shadow: 0 0 30px rgba(168,85,247,0.3);
+      box-shadow: 0 0 30px rgba(0,240,255,0.35), 0 4px 20px rgba(0,240,255,0.2);
     }
-    .btn-primary:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 0 50px rgba(168,85,247,0.5); }
+    .btn-primary:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,240,255,0.55), 0 8px 30px rgba(0,240,255,0.3); }
     .btn-ghost {
-      background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2);
-      padding: .9rem 2.2rem; border-radius: 10px; font-weight: 600; font-size: 1rem;
+      background: transparent; color: var(--cyan); border: 1px solid rgba(0,240,255,0.4);
+      padding: .9rem 2.2rem; border-radius: 8px; font-weight: 600; font-size: 1rem;
       cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem;
-      transition: border-color .2s, background .2s;
+      transition: border-color .2s, background .2s, box-shadow .2s;
     }
-    .btn-ghost:hover { border-color: var(--purple); background: rgba(168,85,247,0.08); }
-    .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center; }
-    .stat .num { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--purple), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .stat .lbl { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+    .btn-ghost:hover { border-color: var(--cyan); background: rgba(0,240,255,0.07); box-shadow: 0 0 20px rgba(0,240,255,0.2); }
+    .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center; animation: fade-up 1s ease-out .8s both; }
+    .stat .num {
+      font-size: 2rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--cyan), #60a5fa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-shadow: none;
+    }
+    .stat .lbl { font-size: .78rem; color: var(--muted); margin-top: .2rem; letter-spacing: .05em; text-transform: uppercase; }
 
     /* PLATFORMS */
     .platforms-bar {
-      position: relative; z-index: 1; padding: 3.5rem 2rem;
+      position: relative; z-index: 1; padding: 3rem 2rem;
       text-align: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
+      background: rgba(0,240,255,0.02);
     }
-    .platforms-bar p { color: var(--muted); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.75rem; }
-    .platform-pills { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; max-width: 900px; margin: 0 auto; }
+    .platforms-bar p { color: var(--muted); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1.75rem; }
+    .platform-pills { display: flex; flex-wrap: wrap; gap: .65rem; justify-content: center; max-width: 860px; margin: 0 auto; }
     .pill {
       display: flex; align-items: center; gap: .5rem;
-      background: var(--card); border: 1px solid var(--border); border-radius: 100px;
-      padding: .45rem 1.1rem; font-size: .875rem; font-weight: 500;
-      transition: border-color .2s, background .2s;
+      background: rgba(0,240,255,0.04); border: 1px solid var(--border); border-radius: 100px;
+      padding: .4rem 1rem; font-size: .845rem; font-weight: 500; color: var(--text);
+      transition: border-color .2s, background .2s, box-shadow .2s;
     }
-    .pill:hover { border-color: var(--purple); background: rgba(168,85,247,0.08); }
+    .pill:hover { border-color: var(--cyan); background: rgba(0,240,255,0.08); box-shadow: 0 0 12px rgba(0,240,255,0.15); }
     .pill-dot { width: 7px; height: 7px; border-radius: 50%; }
 
     /* SECTIONS */
     .section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-full { position: relative; z-index: 1; padding: 6rem 2rem; }
     .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--purple); margin-bottom: .6rem; }
-    .section-h { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; margin-bottom: .9rem; }
-    .section-p { color: var(--muted); font-size: 1rem; max-width: 540px; line-height: 1.7; }
-    .divider { border-top: 1px solid var(--border); background: rgba(255,255,255,0.015); }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: .75rem;
+    }
+    .section-tag::before { content: ''; width: 20px; height: 1px; background: var(--cyan); }
+    .section-h { font-size: clamp(1.9rem, 3.8vw, 2.9rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; margin-bottom: .9rem; }
+    .section-p { color: var(--muted); font-size: .975rem; max-width: 520px; line-height: 1.75; }
+    .divider { border-top: 1px solid var(--border); background: rgba(0,240,255,0.015); }
 
     /* FEATURES */
-    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
     .feat-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem;
-      transition: border-color .3s, transform .3s;
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
     }
-    .feat-card:hover { border-color: var(--purple); transform: translateY(-4px); }
-    .feat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.3rem; }
-    .feat-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
-    .feat-card p { color: var(--muted); font-size: .875rem; line-height: 1.6; }
+    .feat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .feat-card:hover { border-color: var(--border-strong); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,240,255,0.1); }
+    .feat-card:hover::before { opacity: 1; }
+    .feat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.3rem; border: 1px solid var(--border); }
+    .feat-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .45rem; color: white; }
+    .feat-card p { color: var(--muted); font-size: .855rem; line-height: 1.65; }
 
     /* HOW IT WORKS */
     .steps { display: flex; flex-direction: column; margin-top: 3rem; position: relative; }
-    .steps::before { content: ''; position: absolute; left: 23px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--purple), var(--pink), transparent); }
+    .steps::before { content: ''; position: absolute; left: 23px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--cyan), var(--blue), transparent); }
     .step { display: flex; gap: 2rem; padding: 1.75rem 0; align-items: flex-start; }
-    .step-n { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--pink)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; flex-shrink: 0; position: relative; z-index: 1; }
-    .step-body h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
-    .step-body p { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+    .step-n {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .95rem; color: #060b14;
+      flex-shrink: 0; position: relative; z-index: 1;
+      box-shadow: 0 0 20px rgba(0,240,255,0.4);
+    }
+    .step-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; color: white; }
+    .step-body p { color: var(--muted); font-size: .875rem; line-height: 1.65; }
 
     /* PRICING */
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
     .price-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 1.75rem;
-      position: relative; transition: transform .3s, border-color .3s; display: flex; flex-direction: column;
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.75rem;
+      position: relative; transition: transform .3s, border-color .3s, box-shadow .3s; display: flex; flex-direction: column;
     }
-    .price-card:hover { transform: translateY(-5px); }
-    .price-card.pop { border-color: var(--purple); background: rgba(168,85,247,0.06); }
+    .price-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,240,255,0.1); }
+    .price-card.pop { border-color: var(--cyan); background: rgba(0,240,255,0.05); box-shadow: 0 0 30px rgba(0,240,255,0.12); }
     .pop-badge {
       position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--purple), var(--pink)); color: white;
-      font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #060b14; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
       padding: .28rem .9rem; border-radius: 100px; white-space: nowrap;
     }
-    .price-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; margin-bottom: .9rem; font-size: 1.2rem; }
-    .price-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: .25rem; }
-    .price-card .desc { color: var(--muted); font-size: .82rem; margin-bottom: 1.1rem; }
-    .price-amt { font-size: 2.6rem; font-weight: 900; line-height: 1; }
-    .price-per { color: var(--muted); font-size: .875rem; margin-bottom: 1.4rem; }
+    .price-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: .9rem; font-size: 1.2rem; border: 1px solid var(--border); }
+    .price-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .2rem; color: white; }
+    .price-card .desc { color: var(--muted); font-size: .8rem; margin-bottom: 1.1rem; }
+    .price-amt { font-size: 2.5rem; font-weight: 900; line-height: 1; }
+    .price-per { color: var(--muted); font-size: .845rem; margin-bottom: 1.4rem; }
     .feat-list { list-style: none; margin-bottom: 1.5rem; flex: 1; }
-    .feat-list li { display: flex; align-items: flex-start; gap: .55rem; font-size: .845rem; color: var(--text); padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .feat-list li { display: flex; align-items: flex-start; gap: .5rem; font-size: .835rem; color: var(--text); padding: .32rem 0; border-bottom: 1px solid rgba(0,240,255,0.06); }
     .feat-list li:last-child { border-bottom: none; }
-    .ck { color: #22c55e; flex-shrink: 0; margin-top: 1px; font-size: .9rem; }
+    .ck { color: var(--cyan); flex-shrink: 0; margin-top: 1px; font-size: .85rem; }
     .p-btn {
-      width: 100%; padding: .8rem; border-radius: 9px; border: none; font-weight: 700; font-size: .9rem;
+      width: 100%; padding: .78rem; border-radius: 8px; border: none; font-weight: 700; font-size: .875rem;
       cursor: pointer; text-decoration: none; display: block; text-align: center;
-      transition: opacity .2s, transform .2s;
+      transition: opacity .2s, transform .2s, box-shadow .2s;
     }
-    .p-btn:hover { opacity: .85; transform: translateY(-1px); }
-    .pb-blue { background: linear-gradient(135deg,#3b82f6,#22d3ee); color: white; }
-    .pb-purple { background: linear-gradient(135deg,var(--purple),var(--pink)); color: white; box-shadow: 0 0 22px rgba(168,85,247,0.35); }
-    .pb-yellow { background: linear-gradient(135deg,#eab308,#f97316); color: white; }
-    .pb-red { background: linear-gradient(135deg,#ef4444,#dc2626); color: white; }
+    .p-btn:hover { opacity: .88; transform: translateY(-1px); }
+    .pb-cyan { background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #060b14; box-shadow: 0 0 20px rgba(0,240,255,0.3); }
+    .pb-cyan-outline { background: transparent; border: 1px solid var(--cyan) !important; color: var(--cyan); }
+    .pb-cyan-outline:hover { background: rgba(0,240,255,0.08); box-shadow: 0 0 20px rgba(0,240,255,0.2); }
+    .pb-blue { background: linear-gradient(135deg, #3b82f6, #6366f1); color: white; }
+    .pb-red { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
 
     /* UPSELLS */
-    .upsell-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 1.1rem; margin-top: 2.5rem; }
+    .upsell-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.1rem; margin-top: 2.5rem; }
     .upsell-card {
-      background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.25); border-radius: 14px; padding: 1.5rem;
-      transition: border-color .3s, transform .3s;
+      background: rgba(0,240,255,0.03); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 1.5rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
     }
-    .upsell-card:hover { border-color: var(--orange); transform: translateY(-3px); }
-    .upsell-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: .35rem; }
-    .upsell-price { font-size: 1.5rem; font-weight: 800; color: var(--orange); margin-bottom: .4rem; }
-    .upsell-card p { color: var(--muted); font-size: .82rem; line-height: 1.5; margin-bottom: 1.1rem; }
-    .btn-orange {
-      display: block; width: 100%; padding: .65rem;
-      background: linear-gradient(135deg, var(--orange), #ef4444); color: white;
-      border: none; border-radius: 8px; font-weight: 700; font-size: .845rem;
-      cursor: pointer; text-decoration: none; text-align: center; transition: opacity .2s;
+    .upsell-card:hover { border-color: var(--cyan); transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,240,255,0.1); }
+    .upsell-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: .3rem; color: white; }
+    .upsell-price { font-size: 1.5rem; font-weight: 900; color: var(--cyan); margin-bottom: .4rem; text-shadow: 0 0 12px rgba(0,240,255,0.4); }
+    .upsell-card p { color: var(--muted); font-size: .8rem; line-height: 1.55; margin-bottom: 1.1rem; }
+    .btn-cyan-sm {
+      display: block; width: 100%; padding: .62rem;
+      background: transparent; border: 1px solid var(--cyan); color: var(--cyan);
+      border-radius: 7px; font-weight: 700; font-size: .82rem;
+      cursor: pointer; text-decoration: none; text-align: center;
+      transition: background .2s, box-shadow .2s;
     }
-    .btn-orange:hover { opacity: .85; }
+    .btn-cyan-sm:hover { background: rgba(0,240,255,0.1); box-shadow: 0 0 16px rgba(0,240,255,0.25); }
 
     /* COMPARISON */
-    .cmp-wrap { overflow-x: auto; margin-top: 2.75rem; }
-    .cmp-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
-    .cmp-table th { padding: .9rem 1.25rem; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
-    .cmp-table th.us { color: var(--purple); }
+    .cmp-wrap { overflow-x: auto; margin-top: 2.75rem; border-radius: 14px; border: 1px solid var(--border); }
+    .cmp-table { width: 100%; border-collapse: collapse; font-size: .855rem; }
+    .cmp-table th { padding: .9rem 1.25rem; text-align: left; font-weight: 700; border-bottom: 1px solid var(--border); background: rgba(0,240,255,0.04); }
+    .cmp-table th.us { color: var(--cyan); }
     .cmp-table th:first-child { color: var(--muted); }
-    .cmp-table td { padding: .8rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--muted); }
+    .cmp-table td { padding: .78rem 1.25rem; border-bottom: 1px solid rgba(0,240,255,0.06); color: var(--muted); }
     .cmp-table td:first-child { color: var(--text); font-weight: 500; }
-    .cmp-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .yes { color: #22c55e; font-weight: 700; }
+    .cmp-table tr:last-child td { border-bottom: none; }
+    .cmp-table tr:hover td { background: rgba(0,240,255,0.03); }
+    .yes { color: var(--cyan); font-weight: 700; }
     .no { color: #ef4444; }
     .part { color: #eab308; }
 
     /* TESTIMONIALS */
-    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
-    .testi-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: border-color .3s; }
-    .testi-card:hover { border-color: var(--purple); }
-    .stars { color: #eab308; font-size: .95rem; margin-bottom: .9rem; letter-spacing: .1em; }
-    .testi-card blockquote { font-size: .9rem; line-height: 1.7; color: var(--text); margin-bottom: 1.25rem; font-style: italic; }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+    .testi-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .testi-card:hover { border-color: var(--border-strong); box-shadow: 0 6px 24px rgba(0,240,255,0.08); }
+    .stars { color: var(--cyan); font-size: .9rem; margin-bottom: .9rem; letter-spacing: .1em; text-shadow: 0 0 8px rgba(0,240,255,0.4); }
+    .testi-card blockquote { font-size: .875rem; line-height: 1.72; color: var(--text); margin-bottom: 1.25rem; font-style: italic; }
     .testi-author { display: flex; align-items: center; gap: .7rem; }
-    .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
-    .testi-author .name { font-weight: 600; font-size: .875rem; }
-    .testi-author .role { color: var(--muted); font-size: .78rem; }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .82rem; flex-shrink: 0; border: 1px solid var(--border); }
+    .testi-author .name { font-weight: 600; font-size: .855rem; color: white; }
+    .testi-author .role { color: var(--muted); font-size: .75rem; }
 
     /* FAQ */
-    .faq-list { margin-top: 2.75rem; display: flex; flex-direction: column; gap: .85rem; }
-    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .faq-list { margin-top: 2.75rem; display: flex; flex-direction: column; gap: .75rem; }
+    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 11px; overflow: hidden; transition: border-color .2s; }
+    .faq-item.open { border-color: var(--border-strong); }
     .faq-q {
       width: 100%; background: none; border: none; color: white; font-family: inherit;
-      font-size: .975rem; font-weight: 600; text-align: left; padding: 1.1rem 1.4rem;
+      font-size: .945rem; font-weight: 600; text-align: left; padding: 1.1rem 1.4rem;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
       transition: color .2s;
     }
-    .faq-q:hover { color: var(--purple); }
-    .faq-q .arr { transition: transform .3s; font-size: .75rem; color: var(--muted); }
-    .faq-item.open .faq-q .arr { transform: rotate(180deg); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s; padding: 0 1.4rem; color: var(--muted); font-size: .9rem; line-height: 1.7; }
+    .faq-q:hover { color: var(--cyan); }
+    .faq-q .arr { transition: transform .3s; font-size: .72rem; color: var(--muted); }
+    .faq-item.open .faq-q .arr { transform: rotate(180deg); color: var(--cyan); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s; padding: 0 1.4rem; color: var(--muted); font-size: .875rem; line-height: 1.72; }
     .faq-item.open .faq-a { max-height: 300px; padding: 0 1.4rem 1.1rem; }
 
     /* FINAL CTA */
     .final-cta {
-      position: relative; z-index: 1; padding: 6rem 2rem; text-align: center;
-      background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(236,72,153,0.08));
+      position: relative; z-index: 1; padding: 7rem 2rem; text-align: center;
+      background: linear-gradient(135deg, rgba(0,240,255,0.06), rgba(59,130,246,0.06));
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     }
+    .final-cta-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 1.5rem; filter: drop-shadow(0 0 20px rgba(0,240,255,0.6)); animation: logo-glow 3s ease-in-out infinite; }
     .final-cta h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -.02em; margin-bottom: .9rem; }
-    .final-cta p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2.25rem; line-height: 1.7; }
+    .final-cta p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.75; }
 
     /* FOOTER */
-    .footer-wrap { position: relative; z-index: 1; border-top: 1px solid var(--border); }
-    footer {
-      max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem;
-      display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; justify-content: space-between;
-    }
-    .footer-logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: .95rem; color: white; text-decoration: none; }
+    .footer-wrap { position: relative; z-index: 1; border-top: 1px solid var(--border); background: rgba(0,240,255,0.01); }
+    footer { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; justify-content: space-between; }
+    .footer-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .footer-logo img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(0,240,255,0.5)); }
+    .footer-logo-text { font-weight: 700; font-size: .9rem; color: white; }
     .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: .82rem; transition: color .2s; }
-    .footer-links a:hover { color: white; }
-    .footer-copy { color: var(--muted); font-size: .78rem; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: .8rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-copy { color: var(--muted); font-size: .76rem; }
+    .footer-copy a { color: var(--cyan); text-decoration: none; }
 
     /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal { opacity: 0; transform: translateY(25px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.vis { opacity: 1; transform: none; }
 
     /* MOBILE */
     @media (max-width: 768px) {
-      nav { padding: .75rem 1rem; }
+      nav { padding: .7rem 1rem; }
       .nav-links { display: none; }
-      .hero { padding: 7rem 1.25rem 4rem; }
+      .hero { padding: 7.5rem 1.25rem 4rem; }
+      .hero-logo { width: 100px; height: 100px; }
       .hero-stats { gap: 1.5rem; }
       .section, .section-full { padding: 4rem 1.25rem; }
       .steps::before { left: 19px; }
@@ -275,6 +368,7 @@
 </head>
 <body>
 
+<div class="grid-bg"></div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
@@ -282,12 +376,11 @@
 <!-- NAV -->
 <nav id="main-nav">
   <a href="#" class="nav-logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="url(#ng)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
-      <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
-      <line x1="12" y1="2" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="22"/>
-    </svg>
-    GoHigher Records
+    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" alt="GoHigher Records" />
+    <div class="nav-brand">
+      <span>GOHIGHER</span>
+      <span>RECORDS</span>
+    </div>
   </a>
   <div class="nav-links">
     <a href="#features">Features</a>
@@ -300,8 +393,11 @@
 
 <!-- HERO -->
 <div class="hero">
+  <div class="hero-logo-wrap">
+    <img class="hero-logo" src="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" alt="GoHigher Records" />
+  </div>
   <div class="hero-badge"><div class="dot"></div>Now Live — 15+ Platforms in 48 Hours</div>
-  <h1>Your Music.<br><span class="grad">Every Platform.</span><br>Zero Gatekeeping.</h1>
+  <h1>Your Music.<br><span class="grad-cyan">Every Platform.</span><br>Zero Gatekeeping.</h1>
   <p>GoHigher Records distributes your music to Spotify, Apple Music, TikTok, Beatport, and 15+ platforms worldwide — 18–33% cheaper than the competition, with no hidden fees and 100% royalties kept.</p>
   <div class="hero-btns">
     <a href="https://gohigherdash.com/distribution" class="btn-primary">
@@ -322,18 +418,18 @@
 <div class="platforms-bar">
   <p>Distribute to every major platform</p>
   <div class="platform-pills">
-    <div class="pill"><span class="pill-dot" style="background:#22c55e"></span>Spotify</div>
-    <div class="pill"><span class="pill-dot" style="background:#ef4444"></span>Apple Music</div>
-    <div class="pill"><span class="pill-dot" style="background:#ec4899"></span>TikTok</div>
-    <div class="pill"><span class="pill-dot" style="background:#ef4444"></span>YouTube Music</div>
-    <div class="pill"><span class="pill-dot" style="background:#f97316"></span>Amazon Music</div>
-    <div class="pill"><span class="pill-dot" style="background:#3b82f6"></span>Beatport</div>
-    <div class="pill"><span class="pill-dot" style="background:#22d3ee"></span>Deezer</div>
-    <div class="pill"><span class="pill-dot" style="background:#a855f7"></span>Tidal</div>
-    <div class="pill"><span class="pill-dot" style="background:#eab308"></span>Pandora</div>
-    <div class="pill"><span class="pill-dot" style="background:#3b82f6"></span>iHeart Radio</div>
-    <div class="pill"><span class="pill-dot" style="background:#22c55e"></span>Napster</div>
-    <div class="pill"><span class="pill-dot" style="background:#94a3b8"></span>+ 4 More</div>
+    <div class="pill"><span class="pill-dot" style="background:#22c55e;box-shadow:0 0 6px #22c55e"></span>Spotify</div>
+    <div class="pill"><span class="pill-dot" style="background:#ef4444;box-shadow:0 0 6px #ef4444"></span>Apple Music</div>
+    <div class="pill"><span class="pill-dot" style="background:#ec4899;box-shadow:0 0 6px #ec4899"></span>TikTok</div>
+    <div class="pill"><span class="pill-dot" style="background:#ef4444;box-shadow:0 0 6px #ef4444"></span>YouTube Music</div>
+    <div class="pill"><span class="pill-dot" style="background:#f97316;box-shadow:0 0 6px #f97316"></span>Amazon Music</div>
+    <div class="pill"><span class="pill-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>Beatport</div>
+    <div class="pill"><span class="pill-dot" style="background:#22d3ee;box-shadow:0 0 6px #22d3ee"></span>Deezer</div>
+    <div class="pill"><span class="pill-dot" style="background:#a855f7;box-shadow:0 0 6px #a855f7"></span>Tidal</div>
+    <div class="pill"><span class="pill-dot" style="background:#eab308;box-shadow:0 0 6px #eab308"></span>Pandora</div>
+    <div class="pill"><span class="pill-dot" style="background:#3b82f6;box-shadow:0 0 6px #3b82f6"></span>iHeart Radio</div>
+    <div class="pill"><span class="pill-dot" style="background:#22c55e;box-shadow:0 0 6px #22c55e"></span>Napster</div>
+    <div class="pill"><span class="pill-dot" style="background:var(--muted)"></span>+ 4 More</div>
   </div>
 </div>
 
@@ -341,37 +437,37 @@
 <section class="section" id="features">
   <div class="reveal">
     <div class="section-tag">Why GoHigher Records</div>
-    <h2 class="section-h">Built for the <span class="grad">Modern Artist</span></h2>
+    <h2 class="section-h">Built for the <span class="grad-cyan">Modern Artist</span></h2>
     <p class="section-p">Everything you need to get your music heard — and get paid for it — in one autonomous system.</p>
   </div>
   <div class="feat-grid">
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(168,85,247,0.15)">🚀</div>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">🚀</div>
       <h3>48-Hour Distribution</h3>
       <p>Upload today, live on Spotify and Apple Music within 48 hours. No waiting weeks for approval from gatekeepers.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(236,72,153,0.15)">🎨</div>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">🎨</div>
       <h3>AI Artwork Generation</h3>
       <p>Generate professional album art and promo graphics using AI — included in Pro plans and above. No designer needed.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(34,211,238,0.15)">📊</div>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">📊</div>
       <h3>Real-Time Analytics</h3>
       <p>Track streams, revenue, and audience data across every platform from your GoHigherDash dashboard — all in one place.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(34,197,94,0.15)">💰</div>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">💰</div>
       <h3>100% Royalties Kept</h3>
       <p>We charge a flat subscription fee. You keep every dollar earned from streaming — no percentage cuts, ever.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(234,179,8,0.15)">🏷️</div>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">🏷️</div>
       <h3>White-Label Releases</h3>
       <p>Release music under your own label name. Build your brand, not ours. Available on Unlimited and Enterprise plans.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(249,115,22,0.15)">⚡</div>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">⚡</div>
       <h3>Full Automation</h3>
       <p>Powered by GoHigherDash's automation engine. Upload once, distribute everywhere — no manual steps, no bottlenecks.</p>
     </div>
@@ -383,7 +479,7 @@
   <div class="section-inner">
     <div class="reveal">
       <div class="section-tag">Process</div>
-      <h2 class="section-h">From Upload to <span class="grad">Streaming</span> in 3 Steps</h2>
+      <h2 class="section-h">From Upload to <span class="grad-cyan">Streaming</span> in 3 Steps</h2>
       <p class="section-p">The simplest distribution workflow in the industry. No phone calls, no contracts, no gatekeepers.</p>
     </div>
     <div class="steps">
@@ -416,15 +512,16 @@
 <section class="section" id="pricing">
   <div class="reveal">
     <div class="section-tag">Pricing</div>
-    <h2 class="section-h">Simple, <span class="grad">Transparent</span> Pricing</h2>
+    <h2 class="section-h">Simple, <span class="grad-cyan">Transparent</span> Pricing</h2>
     <p class="section-p">18–33% cheaper than DistroKid, TuneCore, and CD Baby. No annual fees. Cancel anytime.</p>
   </div>
   <div class="price-grid">
+    <!-- Starter -->
     <div class="price-card reveal">
-      <div class="price-icon" style="background:rgba(59,130,246,0.15)">🎵</div>
+      <div class="price-icon" style="background:rgba(0,240,255,0.06)">🎵</div>
       <h3>STARTER</h3>
       <p class="desc">Perfect for new artists</p>
-      <div><span class="price-amt" style="background:linear-gradient(135deg,#3b82f6,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$49</span></div>
+      <div><span class="price-amt grad-cyan">$49</span></div>
       <div class="price-per">/month</div>
       <ul class="feat-list">
         <li><span class="ck">✓</span>5 tracks/month</li>
@@ -433,14 +530,15 @@
         <li><span class="ck">✓</span>Email support</li>
         <li><span class="ck">✓</span>GoHigherDash dashboard access</li>
       </ul>
-      <a href="https://gohigherdash.com/distribution" class="p-btn pb-blue">Get Started</a>
+      <a href="https://gohigherdash.com/distribution" class="p-btn pb-cyan-outline">Get Started</a>
     </div>
+    <!-- Pro -->
     <div class="price-card pop reveal">
       <div class="pop-badge">Most Popular</div>
-      <div class="price-icon" style="background:rgba(168,85,247,0.15)">⭐</div>
+      <div class="price-icon" style="background:rgba(0,240,255,0.08)">⭐</div>
       <h3>PRO</h3>
       <p class="desc">For serious artists</p>
-      <div><span class="price-amt" style="background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$149</span></div>
+      <div><span class="price-amt grad-cyan">$149</span></div>
       <div class="price-per">/month</div>
       <ul class="feat-list">
         <li><span class="ck">✓</span>20 tracks/month</li>
@@ -450,13 +548,14 @@
         <li><span class="ck">✓</span>Analytics dashboard</li>
         <li><span class="ck">✓</span>Priority support</li>
       </ul>
-      <a href="https://gohigherdash.com/distribution" class="p-btn pb-purple">Get Started</a>
+      <a href="https://gohigherdash.com/distribution" class="p-btn pb-cyan">Get Started</a>
     </div>
+    <!-- Unlimited -->
     <div class="price-card reveal">
-      <div class="price-icon" style="background:rgba(234,179,8,0.15)">👑</div>
+      <div class="price-icon" style="background:rgba(0,240,255,0.06)">👑</div>
       <h3>UNLIMITED</h3>
       <p class="desc">For power artists &amp; labels</p>
-      <div><span class="price-amt" style="background:linear-gradient(135deg,#eab308,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$299</span></div>
+      <div><span class="price-amt grad-cyan">$299</span></div>
       <div class="price-per">/month</div>
       <ul class="feat-list">
         <li><span class="ck">✓</span>Unlimited tracks</li>
@@ -467,13 +566,14 @@
         <li><span class="ck">✓</span>Priority platform placement</li>
         <li><span class="ck">✓</span>API access for automation</li>
       </ul>
-      <a href="https://gohigherdash.com/distribution" class="p-btn pb-yellow">Get Started</a>
+      <a href="https://gohigherdash.com/distribution" class="p-btn pb-blue">Get Started</a>
     </div>
+    <!-- Enterprise -->
     <div class="price-card reveal">
-      <div class="price-icon" style="background:rgba(239,68,68,0.15)">🚀</div>
+      <div class="price-icon" style="background:rgba(0,240,255,0.06)">🚀</div>
       <h3>ENTERPRISE</h3>
       <p class="desc">Multi-artist management</p>
-      <div><span class="price-amt" style="background:linear-gradient(135deg,#ef4444,#dc2626);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$999</span></div>
+      <div><span class="price-amt grad-cyan">$999</span></div>
       <div class="price-per">/month</div>
       <ul class="feat-list">
         <li><span class="ck">✓</span>Everything in Unlimited</li>
@@ -490,33 +590,33 @@
 
   <!-- Add-Ons -->
   <div style="margin-top:3.5rem;" class="reveal">
-    <h3 style="font-size:1.4rem;font-weight:800;margin-bottom:.4rem;">Add-On Services</h3>
-    <p style="color:var(--muted);font-size:.9rem;">One-time services to accelerate your release.</p>
+    <h3 style="font-size:1.35rem;font-weight:800;margin-bottom:.4rem;color:white;">Add-On Services</h3>
+    <p style="color:var(--muted);font-size:.875rem;">One-time services to accelerate your release.</p>
   </div>
   <div class="upsell-grid">
     <div class="upsell-card reveal">
       <h4>Pay-Per-Track</h4>
       <div class="upsell-price">$25</div>
       <p>One-time distribution to all platforms without a monthly subscription.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-orange">Add Service</a>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm">Add Service</a>
     </div>
     <div class="upsell-card reveal">
       <h4>Expedited Distribution</h4>
       <div class="upsell-price">$50</div>
       <p>48-hour platform approval guarantee. Get live faster than standard processing.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-orange">Add Service</a>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm">Add Service</a>
     </div>
     <div class="upsell-card reveal">
       <h4>Premium Artwork Package</h4>
       <div class="upsell-price">$100</div>
       <p>Custom designer creates your album art to professional release standards.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-orange">Add Service</a>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm">Add Service</a>
     </div>
     <div class="upsell-card reveal">
       <h4>Marketing Boost</h4>
       <div class="upsell-price">$200</div>
       <p>Playlist pitching + social media promotion to grow your first-week streams.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-orange">Add Service</a>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm">Add Service</a>
     </div>
   </div>
 </section>
@@ -526,7 +626,7 @@
   <div class="section-inner">
     <div class="reveal">
       <div class="section-tag">Comparison</div>
-      <h2 class="section-h">GoHigher Records vs. <span class="grad">The Competition</span></h2>
+      <h2 class="section-h">GoHigher Records vs. <span class="grad-cyan">The Competition</span></h2>
       <p class="section-p">We built this to beat DistroKid, TuneCore, and CD Baby on every metric that matters.</p>
     </div>
     <div class="cmp-wrap reveal">
@@ -541,7 +641,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Starter Price</td><td style="color:var(--purple);font-weight:700;">$49/mo</td><td>$22.99/yr</td><td>$14.99/yr</td><td>$9.99/single</td></tr>
+          <tr><td>Starter Price</td><td style="color:var(--cyan);font-weight:700;">$49/mo</td><td>$22.99/yr</td><td>$14.99/yr</td><td>$9.99/single</td></tr>
           <tr><td>Platforms Covered</td><td class="yes">15+</td><td class="part">12+</td><td class="part">12+</td><td class="part">10+</td></tr>
           <tr><td>AI Artwork Generation</td><td class="yes">✓ Included</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
           <tr><td>Analytics Dashboard</td><td class="yes">✓ Built-in</td><td class="part">Basic</td><td class="part">Basic</td><td class="part">Limited</td></tr>
@@ -559,7 +659,7 @@
 <section class="section">
   <div class="reveal">
     <div class="section-tag">Social Proof</div>
-    <h2 class="section-h">Artists Are <span class="grad">Winning</span></h2>
+    <h2 class="section-h">Artists Are <span class="grad-cyan">Winning</span></h2>
     <p class="section-p">Independent artists and labels using GoHigher Records to build real music businesses.</p>
   </div>
   <div class="testi-grid">
@@ -567,7 +667,7 @@
       <div class="stars">★★★★★</div>
       <blockquote>"I switched from DistroKid and saved $80/month while getting way more features. My music is on Beatport now which I couldn't do before. The AI artwork alone is worth the price."</blockquote>
       <div class="testi-author">
-        <div class="avatar" style="background:linear-gradient(135deg,#a855f7,#ec4899)">JM</div>
+        <div class="avatar" style="background:rgba(0,240,255,0.1);color:var(--cyan)">JM</div>
         <div><div class="name">Jordan M.</div><div class="role">Electronic Producer, Chicago</div></div>
       </div>
     </div>
@@ -575,7 +675,7 @@
       <div class="stars">★★★★★</div>
       <blockquote>"The analytics dashboard inside GoHigherDash is insane. I can see exactly which playlist is driving streams in real time. This is what major labels have — now independent artists have it too."</blockquote>
       <div class="testi-author">
-        <div class="avatar" style="background:linear-gradient(135deg,#3b82f6,#22d3ee)">TK</div>
+        <div class="avatar" style="background:rgba(59,130,246,0.1);color:#60a5fa">TK</div>
         <div><div class="name">Tasha K.</div><div class="role">R&amp;B Artist, Atlanta</div></div>
       </div>
     </div>
@@ -583,7 +683,7 @@
       <div class="stars">★★★★★</div>
       <blockquote>"Running a small indie label with 8 artists. The Enterprise plan pays for itself in one month compared to what I was paying TuneCore. White-label releases under our own brand is a game changer."</blockquote>
       <div class="testi-author">
-        <div class="avatar" style="background:linear-gradient(135deg,#eab308,#f97316)">DW</div>
+        <div class="avatar" style="background:rgba(0,240,255,0.1);color:var(--cyan)">DW</div>
         <div><div class="name">Devon W.</div><div class="role">Indie Label Owner, Los Angeles</div></div>
       </div>
     </div>
@@ -592,10 +692,10 @@
 
 <!-- FAQ -->
 <div class="section-full divider" id="faq">
-  <div class="section-inner" style="max-width:780px;">
+  <div class="section-inner" style="max-width:760px;">
     <div class="reveal">
       <div class="section-tag">FAQ</div>
-      <h2 class="section-h">Common <span class="grad">Questions</span></h2>
+      <h2 class="section-h">Common <span class="grad-cyan">Questions</span></h2>
     </div>
     <div class="faq-list">
       <div class="faq-item reveal">
@@ -629,7 +729,8 @@
 <!-- FINAL CTA -->
 <div class="final-cta">
   <div class="reveal">
-    <h2>Ready to Go <span class="grad">Global?</span></h2>
+    <img class="final-cta-logo" src="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" alt="GoHigher Records" />
+    <h2>Ready to Go <span class="grad-cyan">Global?</span></h2>
     <p>Join independent artists and labels distributing their music worldwide through GoHigher Records. Get started in minutes.</p>
     <a href="https://gohigherdash.com/distribution" class="btn-primary" style="display:inline-flex;font-size:1.05rem;padding:.95rem 2.4rem;">
       Start Distributing Today
@@ -642,12 +743,8 @@
 <div class="footer-wrap">
   <footer>
     <a href="#" class="footer-logo">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="url(#fg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <defs><linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
-        <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
-        <line x1="12" y1="2" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="22"/>
-      </svg>
-      GoHigher Records
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" alt="GoHigher Records" />
+      <span class="footer-logo-text">GoHigher Records</span>
     </a>
     <div class="footer-links">
       <a href="#pricing">Pricing</a>
@@ -656,7 +753,7 @@
       <a href="https://gohigherdash.com/privacy">Privacy</a>
       <a href="mailto:hello@gohigherdash.com">Support</a>
     </div>
-    <div class="footer-copy">© 2026 GoHigher Records · Powered by <a href="https://gohigherdash.com" style="color:var(--purple);text-decoration:none;">GoHigherDash</a></div>
+    <div class="footer-copy">© 2026 GoHigher Records · Powered by <a href="https://gohigherdash.com">GoHigherDash</a></div>
   </footer>
 </div>
 
@@ -682,7 +779,7 @@
   });
   window.addEventListener('scroll', () => {
     document.getElementById('main-nav').style.background =
-      window.scrollY > 50 ? 'rgba(5,5,8,0.97)' : 'rgba(5,5,8,0.8)';
+      window.scrollY > 50 ? 'rgba(6,11,20,0.97)' : 'rgba(6,11,20,0.85)';
   });
 </script>
 </body>
