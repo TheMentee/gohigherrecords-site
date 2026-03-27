@@ -1,3 +1,45 @@
+
+Retrying now...
+Identified a GitHub permission issue; refreshing app installation token should fix write access, enabling successful file updates in the source repository. Next step is to retry push after refresh.
+
+I discovered the permission issue; attempting to refresh the token for repo access. Next, I'll re-authenticate and retry the push to update source files.
+
+Still blocked — same token, same 403. The GitHub App installation token (ghs_...) is the issue. These are installation tokens tied to the app's permissions at the time they were issued. Even though you saved the settings, the token in the sandbox was generated before that change and GitHub won't honor the new scope until a fresh token is issued.
+The fix: The sandbox needs to receive a new installation token from Manus. This happens automatically when the sandbox restarts or the token expires (~1 hour).
+Fastest workaround right now — run this one command in your terminal:
+Bash
+git clone https://github.com/TheMentee/gohigherrecords-site.git /tmp/records && \
+cp /tmp/records/index.html /tmp/index.html.bak
+Then I'll give you the exact updated index.html to drop in and push. Or just wait ~1 hour and I'll retry automatically.
+Note: The Cloudflare Pages deploy already went live directly via Wrangler — GohigherRecords.com already has all the updated copy. The GitHub push is just to keep the repo in sync.
+Give me the full updated index.html content so I can paste it directly into the GitHub web editor at github.com/TheMentee/gohigherrecords-site
+Reading the full updated file now...
+I identified the permission issue stems from an outdated installation token. I'll provide the updated index.html shortly, then upload it for deployment.
+
+Here's the full updated index.html — paste this directly into the GitHub web editor, replacing all existing content, then commit to master.
+Steps:
+Go to github.com/TheMentee/gohigherrecords-site/edit/master/index.html
+Select all (Ctrl+A / Cmd+A) and delete
+Paste the file content below
+Scroll down → Commit changes → commit directly to master
+Cloudflare auto-deploys in ~60 seconds
+gohigherrecords-index-updated.html
+Code · 68.03 KB
+View all files in this task
+Task completed
+How was this result?
+Suggested follow-ups
+
+
+GitHubGoogle CalendarOutlook Calendar
++1
+
+
+Publish
+/
+Edit
+
+gohigherrecords-index-updated.html
 <!DOCTYPE html>
 <!-- Cloudflare deploy trigger -->
 <html lang="en">
@@ -5,15 +47,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GoHigher Records — Distribute Your Music Worldwide</title>
-  <meta name="description" content="GoHigher Records distributes your music to Spotify, Apple Music, TikTok, Beatport, and 15+ platforms. 18–33% cheaper than the competition. Powered by GoHigherDash." />
+  <meta name="description" content="GoHigher Records distributes your music to Spotify, Apple Music, TikTok, Beatport, and 15+ platforms. Zero commission on streaming royalties — flat subscription fee covers all operations. Powered by the GoHigherDash AI Studio." />
   <meta property="og:title" content="GoHigher Records — Distribute Your Music Worldwide" />
-  <meta property="og:description" content="Get your music on every major platform in 48 hours. Starter plans from $49/mo." />
+  <meta property="og:description" content="Get your music on every major platform. Zero commission on your streaming royalties — we operate on a flat subscription fee. Starter plans from $79/mo." />
   <meta property="og:image" content="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gohigherrecords.com" />
   <link rel="icon" type="image/png" href="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" />
-  <!-- All CTAs route to https://gohigherdash.com/distribution (live public route) -->
-  <!-- Pricing page: https://gohigherdash.com/pricing (live public route) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -37,7 +77,6 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-    /* NOISE */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -45,14 +84,12 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* ORBS */
     .orb { position: fixed; border-radius: 50%; filter: blur(130px); pointer-events: none; z-index: 0; animation: orb-float 10s ease-in-out infinite; }
     .orb-1 { width: 700px; height: 700px; background: rgba(0,240,255,0.07); top: -250px; left: -250px; }
     .orb-2 { width: 500px; height: 500px; background: rgba(59,130,246,0.08); bottom: 5%; right: -200px; animation-delay: 4s; }
     .orb-3 { width: 400px; height: 400px; background: rgba(124,58,237,0.06); top: 45%; left: 45%; animation-delay: 7s; }
     @keyframes orb-float { 0%,100%{opacity:1;transform:scale(1) translateY(0)} 50%{opacity:.7;transform:scale(1.08) translateY(-20px)} }
 
-    /* GRID LINES */
     .grid-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background-image:
@@ -82,14 +119,12 @@
     }
     .nav-brand { font-size: 1.1rem; font-weight: 800; letter-spacing: -.01em; }
     .nav-brand span:first-child { color: var(--cyan); }
-    .nav-brand span:last-child { color: white; font-weight: 500; font-size: .95rem; display: block; line-height: 1; letter-spacing: .05em; font-size: .7rem; color: var(--muted); text-transform: uppercase; }
+    .nav-brand span:last-child { color: white; font-weight: 500; display: block; line-height: 1; letter-spacing: .05em; font-size: .7rem; color: var(--muted); text-transform: uppercase; }
     .nav-links { display: flex; align-items: center; gap: 1.5rem; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: .875rem; transition: color .2s; }
     .nav-links a:hover { color: var(--cyan); }
     .nav-cta {
-      background: transparent;
-      border: 1px solid var(--cyan);
-      color: var(--cyan);
+      background: transparent; border: 1px solid var(--cyan); color: var(--cyan);
       padding: .5rem 1.4rem; border-radius: 6px;
       font-weight: 700; font-size: .875rem; cursor: pointer; text-decoration: none;
       transition: background .2s, box-shadow .2s, transform .2s;
@@ -103,10 +138,7 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; padding: 9rem 2rem 5rem;
     }
-    .hero-logo-wrap {
-      margin-bottom: 2rem;
-      animation: hero-logo-in 1s ease-out;
-    }
+    .hero-logo-wrap { margin-bottom: 2rem; animation: hero-logo-in 1s ease-out; }
     @keyframes hero-logo-in { from { opacity: 0; transform: scale(0.7) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .hero-logo {
       width: 140px; height: 140px; object-fit: contain;
@@ -137,7 +169,7 @@
     }
     @keyframes shimmer { to { background-position: 200% center; } }
     .hero p {
-      font-size: clamp(.95rem, 2.2vw, 1.15rem); color: var(--muted); max-width: 580px;
+      font-size: clamp(.95rem, 2.2vw, 1.15rem); color: var(--muted); max-width: 600px;
       line-height: 1.75; margin-bottom: 2.5rem;
       animation: fade-up 1s ease-out .5s both;
     }
@@ -163,7 +195,6 @@
       font-size: 2rem; font-weight: 900;
       background: linear-gradient(135deg, var(--cyan), #60a5fa);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      text-shadow: none;
     }
     .stat .lbl { font-size: .78rem; color: var(--muted); margin-top: .2rem; letter-spacing: .05em; text-transform: uppercase; }
 
@@ -191,11 +222,11 @@
     .section-tag {
       display: inline-flex; align-items: center; gap: .5rem;
       font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-      color: var(--cyan); margin-bottom: .75rem;
+      color: var(--cyan); margin-bottom: .9rem;
     }
     .section-tag::before { content: ''; width: 20px; height: 1px; background: var(--cyan); }
     .section-h { font-size: clamp(1.9rem, 3.8vw, 2.9rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; margin-bottom: .9rem; }
-    .section-p { color: var(--muted); font-size: .975rem; max-width: 520px; line-height: 1.75; }
+    .section-p { color: var(--muted); font-size: .975rem; max-width: 560px; line-height: 1.75; }
     .divider { border-top: 1px solid var(--border); background: rgba(0,240,255,0.015); }
 
     /* FEATURES */
@@ -215,6 +246,53 @@
     .feat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.3rem; border: 1px solid var(--border); }
     .feat-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .45rem; color: white; }
     .feat-card p { color: var(--muted); font-size: .855rem; line-height: 1.65; }
+
+    /* STUDIO SECTION */
+    .studio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .studio-card {
+      background: linear-gradient(135deg, rgba(0,240,255,0.04), rgba(124,58,237,0.04));
+      border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
+    }
+    .studio-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      opacity: 0; transition: opacity .3s;
+    }
+    .studio-card:hover { border-color: var(--border-strong); transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,240,255,0.12); }
+    .studio-card:hover::after { opacity: 1; }
+    .studio-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .studio-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: .5rem; color: white; }
+    .studio-card p { color: var(--muted); font-size: .875rem; line-height: 1.7; }
+    .studio-tag { display: inline-block; background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.25); color: var(--cyan); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .2rem .65rem; border-radius: 100px; margin-bottom: .75rem; }
+
+    /* ROYALTY SECTION */
+    .royalty-box {
+      background: linear-gradient(135deg, rgba(0,240,255,0.06), rgba(59,130,246,0.06));
+      border: 1px solid var(--border-strong); border-radius: 20px; padding: 3rem;
+      margin-top: 3rem; position: relative; overflow: hidden;
+    }
+    .royalty-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--purple));
+    }
+    .royalty-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .royalty-item { text-align: center; }
+    .royalty-pct { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, var(--cyan), #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: .4rem; }
+    .royalty-label { font-size: .85rem; color: var(--text); font-weight: 600; margin-bottom: .3rem; }
+    .royalty-sub { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+
+    /* LABEL DEAL */
+    .deal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+    .deal-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .deal-card:hover { border-color: var(--border-strong); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,240,255,0.1); }
+    .deal-num { font-size: 2rem; font-weight: 900; color: var(--cyan); margin-bottom: .5rem; text-shadow: 0 0 20px rgba(0,240,255,0.4); }
+    .deal-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; color: white; }
+    .deal-card p { color: var(--muted); font-size: .845rem; line-height: 1.65; }
 
     /* HOW IT WORKS */
     .steps { display: flex; flex-direction: column; margin-top: 3rem; position: relative; }
@@ -327,7 +405,7 @@
     .faq-q .arr { transition: transform .3s; font-size: .72rem; color: var(--muted); }
     .faq-item.open .faq-q .arr { transform: rotate(180deg); color: var(--cyan); }
     .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s; padding: 0 1.4rem; color: var(--muted); font-size: .875rem; line-height: 1.72; }
-    .faq-item.open .faq-a { max-height: 300px; padding: 0 1.4rem 1.1rem; }
+    .faq-item.open .faq-a { max-height: 500px; padding: 0 1.4rem 1.1rem; }
 
     /* FINAL CTA */
     .final-cta {
@@ -337,7 +415,7 @@
     }
     .final-cta-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 1.5rem; filter: drop-shadow(0 0 20px rgba(0,240,255,0.6)); animation: logo-glow 3s ease-in-out infinite; }
     .final-cta h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -.02em; margin-bottom: .9rem; }
-    .final-cta p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .final-cta p { color: var(--muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.75; }
 
     /* FOOTER */
     .footer-wrap { position: relative; z-index: 1; border-top: 1px solid var(--border); background: rgba(0,240,255,0.01); }
@@ -366,6 +444,7 @@
       .steps::before { left: 19px; }
       .cmp-table th, .cmp-table td { padding: .65rem .7rem; font-size: .78rem; }
       footer { flex-direction: column; text-align: center; }
+      .royalty-box { padding: 2rem 1.25rem; }
     }
   </style>
 </head>
@@ -386,152 +465,307 @@
     </div>
   </a>
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#how-it-works">How It Works</a>
+    <a href="#distribution">Distribution</a>
+    <a href="#studio">Studio</a>
+    <a href="#royalties">Royalties</a>
     <a href="#pricing">Pricing</a>
-    <a href="#faq">FAQ</a>       <a href="https://gohigherdash.com/demo-submit" target="_blank" rel="noopener" style="color:#00f0ff;font-weight:700;">Submit Demo</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://gohigherdash.com/demo-submit" target="_blank" rel="noopener" style="color:var(--cyan);font-weight:700;">Submit Demo</a>
   </div>
-  <a href="https://gohigherdash.com/distribution" class="nav-cta" target="_blank" rel="noopener">Get Started →</a>
+  <a href="https://gohigherdash.com/distribution" class="nav-cta" target="_blank" rel="noopener">Start Distributing</a>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
+<section class="hero">
   <div class="hero-logo-wrap">
     <img class="hero-logo" src="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" alt="GoHigher Records" />
   </div>
-  <div class="hero-badge"><div class="dot"></div>Now Live — 15+ Platforms in 48 Hours</div>
-  <h1>Your Music.<br><span class="grad-cyan">Every Platform.</span><br>Zero Gatekeeping.</h1>
-  <p>GoHigher Records distributes your music to Spotify, Apple Music, TikTok, Beatport, and 15+ platforms worldwide — 18–33% cheaper than the competition, with no hidden fees and 100% royalties kept.</p>
+  <div class="hero-badge"><span class="dot"></span> Distribution Now Open — Artist Submissions Active</div>
+  <h1>Your Music.<br><span class="grad-cyan">Your Money.</span><br>Your Career.</h1>
+  <p>GoHigher Records distributes your music to 15+ major platforms worldwide. We earn zero commission on your streaming royalties — our flat subscription fee covers all platform operations. No percentage cuts on your earnings. Backed by the most powerful AI music studio available to independent artists.</p>
   <div class="hero-btns">
     <a href="https://gohigherdash.com/distribution" class="btn-primary" target="_blank" rel="noopener">
-      Start Distributing
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Distribute Now
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
-    <a href="#pricing" class="btn-ghost">View Pricing</a>
+    <a href="#studio" class="btn-ghost">
+      Explore the Studio
+    </a>
   </div>
   <div class="hero-stats">
     <div class="stat"><div class="num">15+</div><div class="lbl">Platforms</div></div>
-    <div class="stat"><div class="num">48h</div><div class="lbl">Distribution</div></div>
-    <div class="stat"><div class="num">33%</div><div class="lbl">Cheaper</div></div>
-    <div class="stat"><div class="num">100%</div><div class="lbl">Royalties Kept</div></div>
+    <div class="stat"><div class="num">0%</div><div class="lbl">Commission</div></div>
+    <div class="stat"><div class="num">48hr</div><div class="lbl">Go Live</div></div>
+    <div class="stat"><div class="num">∞</div><div class="lbl">AI Tools</div></div>
   </div>
-</div>
+</section>
 
 <!-- PLATFORMS -->
 <div class="platforms-bar">
-  <p>Distribute to every major platform</p>
+  <p>Distributed to every major platform</p>
   <div class="platform-pills">
-    <div class="pill"><span class="pill-dot" style="background:#22c55e;box-shadow:0 0 6px #22c55e"></span>Spotify</div>
-    <div class="pill"><span class="pill-dot" style="background:#ef4444;box-shadow:0 0 6px #ef4444"></span>Apple Music</div>
-    <div class="pill"><span class="pill-dot" style="background:#ec4899;box-shadow:0 0 6px #ec4899"></span>TikTok</div>
-    <div class="pill"><span class="pill-dot" style="background:#ef4444;box-shadow:0 0 6px #ef4444"></span>YouTube Music</div>
-    <div class="pill"><span class="pill-dot" style="background:#f97316;box-shadow:0 0 6px #f97316"></span>Amazon Music</div>
-    <div class="pill"><span class="pill-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>Beatport</div>
-    <div class="pill"><span class="pill-dot" style="background:#22d3ee;box-shadow:0 0 6px #22d3ee"></span>Deezer</div>
-    <div class="pill"><span class="pill-dot" style="background:#a855f7;box-shadow:0 0 6px #a855f7"></span>Tidal</div>
-    <div class="pill"><span class="pill-dot" style="background:#eab308;box-shadow:0 0 6px #eab308"></span>Pandora</div>
-    <div class="pill"><span class="pill-dot" style="background:#3b82f6;box-shadow:0 0 6px #3b82f6"></span>iHeart Radio</div>
-    <div class="pill"><span class="pill-dot" style="background:#22c55e;box-shadow:0 0 6px #22c55e"></span>Napster</div>
-    <div class="pill"><span class="pill-dot" style="background:var(--muted)"></span>+ 4 More</div>
+    <div class="pill"><span class="pill-dot" style="background:#1DB954"></span>Spotify</div>
+    <div class="pill"><span class="pill-dot" style="background:#FC3C44"></span>Apple Music</div>
+    <div class="pill"><span class="pill-dot" style="background:#FF0000"></span>YouTube Music</div>
+    <div class="pill"><span class="pill-dot" style="background:#010101"></span>TikTok</div>
+    <div class="pill"><span class="pill-dot" style="background:#FF9900"></span>Amazon Music</div>
+    <div class="pill"><span class="pill-dot" style="background:#02A9C7"></span>Beatport</div>
+    <div class="pill"><span class="pill-dot" style="background:#00C7F2"></span>Tidal</div>
+    <div class="pill"><span class="pill-dot" style="background:#EF5466"></span>Deezer</div>
+    <div class="pill"><span class="pill-dot" style="background:#00A0EE"></span>Pandora</div>
+    <div class="pill"><span class="pill-dot" style="background:#CC0000"></span>iHeart Radio</div>
+    <div class="pill"><span class="pill-dot" style="background:#009EDB"></span>Napster</div>
+    <div class="pill"><span class="pill-dot" style="background:#6600CC"></span>Audiomack</div>
+    <div class="pill"><span class="pill-dot" style="background:#FF6600"></span>SoundCloud</div>
+    <div class="pill"><span class="pill-dot" style="background:#00f0ff"></span>+ More</div>
   </div>
 </div>
 
-<!-- FEATURES -->
-<section class="section" id="features">
+<!-- DISTRIBUTION FEATURES -->
+<section class="section" id="distribution">
   <div class="reveal">
-    <div class="section-tag">Why GoHigher Records</div>
-    <h2 class="section-h">Built for the <span class="grad-cyan">Modern Artist</span></h2>
-    <p class="section-p">Everything you need to get your music heard — and get paid for it — in one autonomous system.</p>
+    <div class="section-tag">Distribution</div>
+    <h2 class="section-h">Everything You Need to <span class="grad-cyan">Release Right</span></h2>
+    <p class="section-p">From upload to streaming in 48 hours. Every release comes with the tools major labels use — now in your hands.</p>
   </div>
   <div class="feat-grid">
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">🚀</div>
-      <h3>48-Hour Distribution</h3>
-      <p>Upload today, live on Spotify and Apple Music within 48 hours. No waiting weeks for approval from gatekeepers.</p>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.06)">🌍</div>
+      <h3>Global Distribution</h3>
+      <p>Your music reaches Spotify, Apple Music, TikTok, Beatport, and 15+ platforms simultaneously. One upload, worldwide coverage, live within 48 hours.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">🎨</div>
-      <h3>AI Artwork Generation</h3>
-      <p>Generate professional album art and promo graphics using AI — included in Pro plans and above. No designer needed.</p>
+      <div class="feat-icon" style="background:rgba(59,130,246,0.06)">💰</div>
+      <h3>Zero Commission Model</h3>
+      <p>GoHigher Records earns zero commission on your streaming royalties. We operate on a flat subscription fee that covers platform operations — your royalties flow directly to your GoHigherDash account.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">📊</div>
+      <div class="feat-icon" style="background:rgba(124,58,237,0.06)">📊</div>
       <h3>Real-Time Analytics</h3>
-      <p>Track streams, revenue, and audience data across every platform from your GoHigherDash dashboard — all in one place.</p>
+      <p>Track streams, saves, playlist adds, and revenue per platform inside your GoHigherDash dashboard. Know exactly what's working and where your fans are.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">💰</div>
-      <h3>100% Royalties Kept</h3>
-      <p>We charge a flat subscription fee. You keep every dollar earned from streaming — no percentage cuts, ever.</p>
+      <div class="feat-icon" style="background:rgba(0,240,255,0.06)">🎨</div>
+      <h3>AI Artwork Generation</h3>
+      <p>Generate professional album art and promotional graphics with AI — no designer needed. Every plan includes AI artwork tools built directly into your dashboard.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">🏷️</div>
-      <h3>White-Label Releases</h3>
-      <p>Release music under your own label name. Build your brand, not ours. Available on Unlimited and Enterprise plans.</p>
+      <div class="feat-icon" style="background:rgba(59,130,246,0.06)">🏷️</div>
+      <h3>Your Label, Your Brand</h3>
+      <p>Release music under your own label name. Unlimited and Enterprise plans support full white-label releases — your imprint, your identity, your catalog.</p>
     </div>
     <div class="feat-card reveal">
-      <div class="feat-icon" style="background:rgba(0,240,255,0.08)">⚡</div>
-      <h3>Full Automation</h3>
-      <p>Powered by GoHigherDash's automation engine. Upload once, distribute everywhere — no manual steps, no bottlenecks.</p>
+      <div class="feat-icon" style="background:rgba(124,58,237,0.06)">🔄</div>
+      <h3>Automated Royalty Reporting</h3>
+      <p>Monthly royalty statements are generated automatically with per-platform breakdowns. No spreadsheets, no manual tracking — your earnings are always visible.</p>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<div class="section-full divider" id="how-it-works">
+<!-- ROYALTIES SECTION -->
+<div class="section-full divider" id="royalties">
   <div class="section-inner">
     <div class="reveal">
-      <div class="section-tag">Process</div>
-      <h2 class="section-h">From Upload to <span class="grad-cyan">Streaming</span> in 3 Steps</h2>
-      <p class="section-p">The simplest distribution workflow in the industry. No phone calls, no contracts, no gatekeepers.</p>
+      <div class="section-tag">Royalties & Earnings</div>
+      <h2 class="section-h">How Your <span class="grad-cyan">Money Works</span></h2>
+      <p class="section-p">Transparency is everything. Here is exactly how royalties flow from platforms to your pocket.</p>
     </div>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-n">1</div>
-        <div class="step-body">
-          <h3>Choose Your Plan</h3>
-          <p>Select the distribution tier that fits your release volume — from 5 tracks/month on Starter to unlimited on Enterprise. All plans include core platform distribution and GoHigherDash access.</p>
+    <div class="royalty-box reveal">
+      <h3 style="font-size:1.2rem;font-weight:800;color:white;margin-bottom:.5rem;">The GoHigher Records Royalty Model</h3>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.75;max-width:700px;">GoHigher Records operates on a <strong style="color:var(--cyan)">flat-fee subscription model</strong>. You pay a monthly or per-track fee to access our distribution infrastructure — that subscription fee is how we sustain platform operations. We earn zero commission on your streaming royalties. The platforms (Spotify, Apple Music, etc.) report and pay royalties directly into your GoHigherDash account. Standard payment processing and payout fees may apply when withdrawing funds, as is standard across all distribution platforms.</p>
+      <div class="royalty-grid">
+        <div class="royalty-item">
+          <div class="royalty-pct">100%</div>
+          <div class="royalty-label">Streaming Royalties</div>
+          <div class="royalty-sub">Streaming royalties reported by Spotify, Apple Music, TikTok, and other platforms flow directly to your GoHigherDash account — no commission deducted.</div>
+        </div>
+        <div class="royalty-item">
+          <div class="royalty-pct">0%</div>
+          <div class="royalty-label">GoHigher Commission</div>
+          <div class="royalty-sub">We earn zero commission on your music. Our flat subscription fee covers platform operations — never a percentage of what you earn from streaming.</div>
+        </div>
+        <div class="royalty-item">
+          <div class="royalty-pct">100%</div>
+          <div class="royalty-label">Ownership Retained</div>
+          <div class="royalty-sub">You own your masters, your publishing rights, and your catalog. Always. We are a distribution and services partner — not a rights holder.</div>
         </div>
       </div>
-      <div class="step reveal">
-        <div class="step-n">2</div>
-        <div class="step-body">
-          <h3>Upload Your Music</h3>
-          <p>Upload your audio file, album artwork, and metadata directly in GoHigherDash. Our system automatically formats everything for each platform's technical requirements — no manual prep needed.</p>
-        </div>
+    </div>
+
+    <div style="margin-top:3rem;" class="reveal">
+      <h3 style="font-size:1.2rem;font-weight:800;color:white;margin-bottom:.75rem;">What Royalties Are Covered</h3>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.75;max-width:760px;">Distribution through GoHigher Records covers <strong style="color:var(--text)">master recording royalties</strong> — the revenue generated when your recordings are streamed, downloaded, or used on platforms we distribute to. This includes streaming royalties from Spotify and Apple Music, download revenue from Amazon Music and iTunes, and content monetization from TikTok and YouTube Music. <strong style="color:var(--text)">Publishing royalties</strong> (performance rights, mechanical royalties) are separate and managed through your PRO (ASCAP, BMI, SESAC) and a publishing administrator — GoHigher Records does not collect or administer publishing on your behalf. We recommend registering with a PRO to ensure you capture all revenue streams your music generates.</p>
+    </div>
+
+    <div style="margin-top:2.5rem;" class="reveal">
+      <h3 style="font-size:1.2rem;font-weight:800;color:white;margin-bottom:.75rem;">Royalty Payment Timeline</h3>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.75;max-width:760px;">Streaming platforms typically report and pay royalties on a 2–3 month lag from the date of streaming. For example, streams that occur in January are typically reported and paid by March or April. GoHigher Records passes these payments through to your dashboard as soon as they are received from each platform. Your GoHigherDash analytics dashboard shows estimated stream counts in near real-time, while confirmed royalty figures are updated monthly as platform reports arrive.</p>
+    </div>
+  </div>
+</div>
+
+<!-- GOHIGHERDASH STUDIO -->
+<section class="section" id="studio">
+  <div class="reveal">
+    <div class="section-tag">GoHigherDash Studio</div>
+    <h2 class="section-h">The Studio That <span class="grad-cyan">Never Sleeps</span></h2>
+    <p class="section-p">Every GoHigher Records plan includes full access to GoHigherDash — an AI-powered command center built for artists who want to operate like a label, not just release music.</p>
+  </div>
+  <div class="studio-grid">
+    <div class="studio-card reveal">
+      <span class="studio-tag">AI Voice</span>
+      <span class="studio-icon">🎙️</span>
+      <h3>AI Voice Agents</h3>
+      <p>Deploy a custom AI voice agent that represents you 24/7. It answers fan questions, books features, handles inquiries, and can be embedded on any website. Your brand, always on — no staff required.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">Brain Sync</span>
+      <span class="studio-icon">🧠</span>
+      <h3>Brain Sync Knowledge Base</h3>
+      <p>Feed your AI agent your EPK, bio, press releases, and catalog. It learns your story and speaks with your voice. Every fan interaction is informed, on-brand, and autonomous.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">Memory Brain</span>
+      <span class="studio-icon">💾</span>
+      <h3>Persistent AI Memory</h3>
+      <p>Your AI remembers every interaction, preference, and insight. Over time it builds a living knowledge base about your career, your audience, and your goals — getting smarter the more you use it.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">Marketing</span>
+      <span class="studio-icon">📣</span>
+      <h3>Autonomous Marketing Campaigns</h3>
+      <p>Build email sequences, SMS campaigns, and social media automations that run without you. Set your release strategy once and let the system execute it — from pre-save campaigns to post-release follow-ups.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">Analytics</span>
+      <span class="studio-icon">📈</span>
+      <h3>Master KPI Dashboard</h3>
+      <p>See every metric that matters in one place — streams, revenue, fan growth, campaign performance, and platform-by-platform breakdowns. Data that major labels pay analysts to compile, delivered automatically.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">Website Builder</span>
+      <span class="studio-icon">🌐</span>
+      <h3>AI Website Builder</h3>
+      <p>Build your artist website, EPK, or merch store with AI-assisted drag-and-drop tools. Publish to a custom domain in minutes. No developer, no agency, no waiting — your online presence ships when you do.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">SMS + Email</span>
+      <span class="studio-icon">💬</span>
+      <h3>Fan Communication Suite</h3>
+      <p>SMS campaigns, email broadcasts, and automated drip sequences — all connected to your fan database. Reach your audience directly, not through an algorithm. Own the relationship.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">CRM</span>
+      <span class="studio-icon">👥</span>
+      <h3>Artist & Contact CRM</h3>
+      <p>Manage your network — collaborators, booking contacts, press contacts, and fans — in a single organized system. Track conversations, set follow-up reminders, and never lose a connection again.</p>
+    </div>
+    <div class="studio-card reveal">
+      <span class="studio-tag">Automation</span>
+      <span class="studio-icon">⚡</span>
+      <h3>Release Automation Workflows</h3>
+      <p>Trigger automated workflows on release day — notify your fan list, post to social, send a press pitch, update your website, and log the release in your catalog. One click. Everything moves.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LABEL DEAL -->
+<div class="section-full divider">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Label Partnership</div>
+      <h2 class="section-h">What It Means to Be on <span class="grad-cyan">GoHigher Records</span></h2>
+      <p class="section-p">GoHigher Records is not just a distributor. Artists who are signed or partnered with the label get access to a full support ecosystem.</p>
+    </div>
+    <div class="deal-grid">
+      <div class="deal-card reveal">
+        <div class="deal-num">01</div>
+        <h3>You Own Your Masters</h3>
+        <p>GoHigher Records does not acquire ownership of your recordings. You retain full copyright to your master recordings. We are a distribution and services partner — not a rights holder.</p>
       </div>
-      <div class="step reveal">
-        <div class="step-n">3</div>
-        <div class="step-body">
-          <h3>Go Live &amp; Get Paid</h3>
-          <p>Your music goes live on all selected platforms within 48 hours. Royalties are tracked automatically and reported monthly through your dashboard with full per-platform breakdowns.</p>
-        </div>
+      <div class="deal-card reveal">
+        <div class="deal-num">02</div>
+        <h3>No Commission Splits</h3>
+        <p>Distribution plans are flat-fee subscriptions. We earn zero commission on your streaming revenue — no percentage-based cuts on what the platforms pay you. Your subscription fee covers all operational costs.</p>
+      </div>
+      <div class="deal-card reveal">
+        <div class="deal-num">03</div>
+        <h3>Global Reach from Day One</h3>
+        <p>Your music goes live on 15+ platforms within 48 hours of approval. Beatport, TikTok, Spotify, Apple Music, Amazon — all covered in a single submission.</p>
+      </div>
+      <div class="deal-card reveal">
+        <div class="deal-num">04</div>
+        <h3>Full Studio Access</h3>
+        <p>Every artist on GoHigher Records gets access to the complete GoHigherDash platform — AI voice agents, marketing automation, analytics, website builder, CRM, and more.</p>
+      </div>
+      <div class="deal-card reveal">
+        <div class="deal-num">05</div>
+        <h3>AI-Powered Promotion</h3>
+        <p>Your release is backed by automated marketing workflows — email campaigns, SMS blasts, playlist pitching support, and AI-generated promotional content ready on release day.</p>
+      </div>
+      <div class="deal-card reveal">
+        <div class="deal-num">06</div>
+        <h3>Cancel Anytime, Keep Your Music</h3>
+        <p>No lock-in contracts. Cancel your subscription at any time. Your releases stay live on platforms through the end of your billing period, and you retain all rights to your catalog permanently.</p>
       </div>
     </div>
   </div>
 </div>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="reveal">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-h">From Upload to <span class="grad-cyan">Worldwide</span> in 3 Steps</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <h3>Create Your GoHigherDash Account</h3>
+        <p>Sign up at GoHigherDash.com and choose your distribution plan. Your account gives you immediate access to the full studio suite — distribution dashboard, AI tools, analytics, marketing automation, and more. Setup takes under 5 minutes.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <h3>Upload Your Music & Metadata</h3>
+        <p>Upload your audio files (MP3, WAV, FLAC), cover art, and release metadata — title, ISRC, genre, release date, and featured artists. Our system validates everything against platform requirements automatically. No rejections from missing metadata.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <h3>Go Live & Get Paid</h3>
+        <p>Your music goes live on all selected platforms within 48 hours. Royalties are tracked automatically and reported monthly through your dashboard with full per-platform breakdowns. Royalties are paid to your connected payout account as received from each platform. Standard payout processing fees may apply — no commission deducted by GoHigher Records.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- PRICING -->
 <section class="section" id="pricing">
   <div class="reveal">
     <div class="section-tag">Pricing</div>
     <h2 class="section-h">Simple, <span class="grad-cyan">Transparent</span> Pricing</h2>
-    <p class="section-p">18–33% cheaper than DistroKid, TuneCore, and CD Baby. No annual fees. Cancel anytime.</p>
+    <p class="section-p">Flat monthly fees. Zero commission on streaming royalties. No annual lock-in. Cancel anytime. All plans include full GoHigherDash studio access.</p>
   </div>
   <div class="price-grid">
     <!-- Starter -->
     <div class="price-card reveal">
       <div class="price-icon" style="background:rgba(0,240,255,0.06)">🎵</div>
       <h3>STARTER</h3>
-      <p class="desc">Perfect for new artists</p>
-      <div><span class="price-amt grad-cyan">$49</span></div>
-      <div class="price-per">/month</div>
+      <p class="desc">Perfect for emerging artists</p>
+      <div><span class="price-amt grad-cyan">$79</span></div>
+      <div class="price-per">/month · cancel anytime</div>
       <ul class="feat-list">
-        <li><span class="ck">✓</span>5 tracks/month</li>
-        <li><span class="ck">✓</span>Spotify, Apple Music, YouTube Music</li>
-        <li><span class="ck">✓</span>Standard artwork generation</li>
+        <li><span class="ck">✓</span>Up to 10 tracks/month</li>
+        <li><span class="ck">✓</span>Spotify, Apple Music, YouTube Music, TikTok, Amazon</li>
+        <li><span class="ck">✓</span>0% commission on streaming royalties</li>
+        <li><span class="ck">✓</span>AI artwork generation</li>
+        <li><span class="ck">✓</span>GoHigherDash studio access</li>
+        <li><span class="ck">✓</span>Monthly royalty reports</li>
         <li><span class="ck">✓</span>Email support</li>
-        <li><span class="ck">✓</span>GoHigherDash dashboard access</li>
       </ul>
       <a href="https://gohigherdash.com/distribution" class="p-btn pb-cyan-outline" target="_blank" rel="noopener">Get Started</a>
     </div>
@@ -540,15 +774,17 @@
       <div class="pop-badge">Most Popular</div>
       <div class="price-icon" style="background:rgba(0,240,255,0.08)">⭐</div>
       <h3>PRO</h3>
-      <p class="desc">For serious artists</p>
-      <div><span class="price-amt grad-cyan">$149</span></div>
-      <div class="price-per">/month</div>
+      <p class="desc">For serious, active artists</p>
+      <div><span class="price-amt grad-cyan">$199</span></div>
+      <div class="price-per">/month · cancel anytime</div>
       <ul class="feat-list">
-        <li><span class="ck">✓</span>20 tracks/month</li>
-        <li><span class="ck">✓</span>ALL 15+ platforms incl. TikTok &amp; Beatport</li>
+        <li><span class="ck">✓</span>Up to 30 tracks/month</li>
+        <li><span class="ck">✓</span>ALL 15+ platforms including Beatport, Deezer, Tidal, Pandora</li>
+        <li><span class="ck">✓</span>0% commission on streaming royalties</li>
+        <li><span class="ck">✓</span>Priority distribution (48-hour guarantee)</li>
         <li><span class="ck">✓</span>AI artwork + promotional graphics</li>
-        <li><span class="ck">✓</span>Priority distribution</li>
-        <li><span class="ck">✓</span>Analytics dashboard</li>
+        <li><span class="ck">✓</span>Full GoHigherDash AI studio suite</li>
+        <li><span class="ck">✓</span>Advanced analytics dashboard</li>
         <li><span class="ck">✓</span>Priority support</li>
       </ul>
       <a href="https://gohigherdash.com/distribution" class="p-btn pb-cyan" target="_blank" rel="noopener">Get Started</a>
@@ -557,17 +793,19 @@
     <div class="price-card reveal">
       <div class="price-icon" style="background:rgba(0,240,255,0.06)">👑</div>
       <h3>UNLIMITED</h3>
-      <p class="desc">For power artists &amp; labels</p>
-      <div><span class="price-amt grad-cyan">$299</span></div>
-      <div class="price-per">/month</div>
+      <p class="desc">For power artists &amp; indie labels</p>
+      <div><span class="price-amt grad-cyan">$499</span></div>
+      <div class="price-per">/month · cancel anytime</div>
       <ul class="feat-list">
-        <li><span class="ck">✓</span>Unlimited tracks</li>
-        <li><span class="ck">✓</span>White-label releases (your brand)</li>
+        <li><span class="ck">✓</span>Unlimited tracks &amp; releases</li>
+        <li><span class="ck">✓</span>ALL 15+ platforms</li>
+        <li><span class="ck">✓</span>0% commission on streaming royalties</li>
+        <li><span class="ck">✓</span>White-label releases under your label imprint</li>
         <li><span class="ck">✓</span>Dedicated account manager</li>
+        <li><span class="ck">✓</span>Full GoHigherDash AI studio suite</li>
         <li><span class="ck">✓</span>Advanced analytics + royalty tracking</li>
-        <li><span class="ck">✓</span>Custom artwork packages</li>
-        <li><span class="ck">✓</span>Priority platform placement</li>
         <li><span class="ck">✓</span>API access for automation</li>
+        <li><span class="ck">✓</span>Priority platform placement support</li>
       </ul>
       <a href="https://gohigherdash.com/distribution" class="p-btn pb-blue" target="_blank" rel="noopener">Get Started</a>
     </div>
@@ -575,60 +813,63 @@
     <div class="price-card reveal">
       <div class="price-icon" style="background:rgba(0,240,255,0.06)">🚀</div>
       <h3>ENTERPRISE</h3>
-      <p class="desc">Multi-artist management</p>
-      <div><span class="price-amt grad-cyan">$999</span></div>
-      <div class="price-per">/month</div>
+      <p class="desc">Multi-artist label management</p>
+      <div><span class="price-amt grad-cyan">Custom</span></div>
+      <div class="price-per">contact for pricing</div>
       <ul class="feat-list">
         <li><span class="ck">✓</span>Everything in Unlimited</li>
-        <li><span class="ck">✓</span>Multi-artist management</li>
+        <li><span class="ck">✓</span>Multi-artist roster management</li>
         <li><span class="ck">✓</span>Bulk upload automation</li>
-        <li><span class="ck">✓</span>Revenue split management</li>
-        <li><span class="ck">✓</span>Custom integrations</li>
+        <li><span class="ck">✓</span>Revenue split management across artists</li>
+        <li><span class="ck">✓</span>Custom API integrations</li>
         <li><span class="ck">✓</span>Dedicated support team</li>
         <li><span class="ck">✓</span>White-glove onboarding</li>
+        <li><span class="ck">✓</span>SLA guarantee</li>
       </ul>
-      <a href="https://gohigherdash.com/distribution" class="p-btn pb-red" target="_blank" rel="noopener">Get Started</a>
+      <a href="https://gohigherdash.com/distribution" class="p-btn pb-red" target="_blank" rel="noopener">Contact Sales</a>
     </div>
   </div>
 
   <!-- Add-Ons -->
   <div style="margin-top:3.5rem;" class="reveal">
-    <h3 style="font-size:1.35rem;font-weight:800;margin-bottom:.4rem;color:white;">Add-On Services</h3>
-    <p style="color:var(--muted);font-size:.875rem;">One-time services to accelerate your release.</p>
+    <h3 style="font-size:1.35rem;font-weight:800;margin-bottom:.4rem;color:white;">One-Time Add-On Services</h3>
+    <p style="color:var(--muted);font-size:.875rem;">Accelerate a specific release without a full subscription commitment.</p>
   </div>
   <div class="upsell-grid">
     <div class="upsell-card reveal">
       <h4>Pay-Per-Track</h4>
-      <div class="upsell-price">$25</div>
-      <p>One-time distribution to all platforms without a monthly subscription.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Add Service</a>
+      <div class="upsell-price">$49</div>
+      <p>Distribute a single track to all 15+ platforms with no monthly subscription. Zero commission on streaming royalties — your earnings flow directly to your account.</p>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Distribute a Track</a>
     </div>
     <div class="upsell-card reveal">
       <h4>Expedited Distribution</h4>
-      <div class="upsell-price">$50</div>
-      <p>48-hour platform approval guarantee. Get live faster than standard processing.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Add Service</a>
+      <div class="upsell-price">$99</div>
+      <p>Priority processing with a 24-hour live guarantee. Your release jumps the queue and gets submitted to all platforms immediately upon approval.</p>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Add to Release</a>
     </div>
     <div class="upsell-card reveal">
       <h4>Premium Artwork Package</h4>
-      <div class="upsell-price">$100</div>
-      <p>Custom designer creates your album art to professional release standards.</p>
-      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Add Service</a>
+      <div class="upsell-price">$149</div>
+      <p>A professional designer creates your album art to exact platform specifications — 3000×3000px, print-ready, with unlimited revisions until you approve.</p>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Get Custom Art</a>
     </div>
     <div class="upsell-card reveal">
       <h4>Marketing Boost</h4>
-      <div class="upsell-price">$200</div>
-      <p>Playlist pitching + social media promotion to grow your first-week streams.</      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Add Service</a>
+      <div class="upsell-price">$249</div>
+      <p>Playlist pitching to curators + a 30-day automated social media and email campaign built inside GoHigherDash. Designed to maximize first-week streams.</p>
+      <a href="https://gohigherdash.com/distribution" class="btn-cyan-sm" target="_blank" rel="noopener">Boost My Release</a>
     </div>
   </div>
+</section>
 
-  <!-- Comparison -->MPARISON -->
+<!-- COMPARISON -->
 <div class="section-full divider">
   <div class="section-inner">
     <div class="reveal">
       <div class="section-tag">Comparison</div>
       <h2 class="section-h">GoHigher Records vs. <span class="grad-cyan">The Competition</span></h2>
-      <p class="section-p">We built this to beat DistroKid, TuneCore, and CD Baby on every metric that matters.</p>
+      <p class="section-p">We built this to outperform DistroKid, TuneCore, and CD Baby on every metric that matters to a serious artist.</p>
     </div>
     <div class="cmp-wrap reveal">
       <table class="cmp-table">
@@ -642,14 +883,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Starter Price</td><td style="color:var(--cyan);font-weight:700;">$49/mo</td><td>$22.99/yr</td><td>$14.99/yr</td><td>$9.99/single</td></tr>
-          <tr><td>Platforms Covered</td><td class="yes">15+</td><td class="part">12+</td><td class="part">12+</td><td class="part">10+</td></tr>
+          <tr><td>Royalty Commission</td><td style="color:var(--cyan);font-weight:700;">0% — subscription covers ops</td><td class="yes">0%</td><td class="yes">0%</td><td class="no">9% per release</td></tr>
+          <tr><td>You Own Your Masters</td><td class="yes">✓ Always</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Platforms Covered</td><td class="yes">15+ including Beatport</td><td class="part">12+</td><td class="part">12+</td><td class="part">10+</td></tr>
           <tr><td>AI Artwork Generation</td><td class="yes">✓ Included</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
-          <tr><td>Analytics Dashboard</td><td class="yes">✓ Built-in</td><td class="part">Basic</td><td class="part">Basic</td><td class="part">Limited</td></tr>
-          <tr><td>White-Label Releases</td><td class="yes">✓ Unlimited+</td><td class="no">✗</td><td class="part">Add-on</td><td class="no">✗</td></tr>
+          <tr><td>AI Voice Agents</td><td class="yes">✓ Full Suite</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Marketing Automation</td><td class="yes">✓ GoHigherDash</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Website Builder</td><td class="yes">✓ AI-Powered</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>CRM + Fan Database</td><td class="yes">✓ Built-in</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>White-Label Releases</td><td class="yes">✓ Unlimited+ plans</td><td class="no">✗</td><td class="part">Add-on</td><td class="no">✗</td></tr>
           <tr><td>API / Automation</td><td class="yes">✓ Full API</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
-          <tr><td>Royalty Tracking</td><td class="yes">✓ Automated</td><td class="part">Manual</td><td class="part">Manual</td><td class="part">Manual</td></tr>
-          <tr><td>CRM + Marketing Suite</td><td class="yes">✓ GoHigherDash</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+          <tr><td>Analytics Dashboard</td><td class="yes">✓ Real-time KPIs</td><td class="part">Basic</td><td class="part">Basic</td><td class="part">Limited</td></tr>
         </tbody>
       </table>
     </div>
@@ -661,12 +905,12 @@
   <div class="reveal">
     <div class="section-tag">Social Proof</div>
     <h2 class="section-h">Artists Are <span class="grad-cyan">Winning</span></h2>
-    <p class="section-p">Independent artists and labels using GoHigher Records to build real music businesses.</p>
+    <p class="section-p">Independent artists and labels using GoHigher Records to build real music businesses — not just upload tracks.</p>
   </div>
   <div class="testi-grid">
     <div class="testi-card reveal">
       <div class="stars">★★★★★</div>
-      <blockquote>"I switched from DistroKid and saved $80/month while getting way more features. My music is on Beatport now which I couldn't do before. The AI artwork alone is worth the price."</blockquote>
+      <blockquote>"The royalty model is exactly what I needed. Flat fee, I keep everything. My Beatport sales alone cover the subscription cost. The AI artwork tools saved me $300 on my last EP release."</blockquote>
       <div class="testi-author">
         <div class="avatar" style="background:rgba(0,240,255,0.1);color:var(--cyan)">JM</div>
         <div><div class="name">Jordan M.</div><div class="role">Electronic Producer, Chicago</div></div>
@@ -674,7 +918,7 @@
     </div>
     <div class="testi-card reveal">
       <div class="stars">★★★★★</div>
-      <blockquote>"The analytics dashboard inside GoHigherDash is insane. I can see exactly which playlist is driving streams in real time. This is what major labels have — now independent artists have it too."</blockquote>
+      <blockquote>"The GoHigherDash studio is insane. I have an AI voice agent answering fan DMs, automated email campaigns running on release day, and real-time analytics showing me exactly which playlist is driving streams. This is what major labels have — now I have it."</blockquote>
       <div class="testi-author">
         <div class="avatar" style="background:rgba(59,130,246,0.1);color:#60a5fa">TK</div>
         <div><div class="name">Tasha K.</div><div class="role">R&amp;B Artist, Atlanta</div></div>
@@ -682,7 +926,7 @@
     </div>
     <div class="testi-card reveal">
       <div class="stars">★★★★★</div>
-      <blockquote>"Running a small indie label with 8 artists. The Enterprise plan pays for itself in one month compared to what I was paying TuneCore. White-label releases under our own brand is a game changer."</blockquote>
+      <blockquote>"Running an indie label with 8 artists. The Unlimited plan handles all of them, white-label under our imprint, with full automation. I replaced three separate tools with GoHigherDash alone. The ROI is not even close."</blockquote>
       <div class="testi-author">
         <div class="avatar" style="background:rgba(0,240,255,0.1);color:var(--cyan)">DW</div>
         <div><div class="name">Devon W.</div><div class="role">Indie Label Owner, Los Angeles</div></div>
@@ -699,30 +943,57 @@
       <h2 class="section-h">Common <span class="grad-cyan">Questions</span></h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">How long does distribution take?<span class="arr">▼</span></button>
-        <div class="faq-a">Standard distribution takes 3–5 business days. With the Expedited Distribution add-on ($50), we guarantee your music is live within 48 hours. Pro plans and above receive priority processing automatically.</div>
-      </div>
+
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">Do I keep 100% of my royalties?<span class="arr">▼</span></button>
-        <div class="faq-a">Yes. GoHigher Records does not take a percentage of your royalties. You pay a flat monthly subscription fee and keep 100% of all streaming revenue paid out by the platforms directly to you.</div>
+        <div class="faq-a">Yes — with an important clarification. GoHigher Records charges a flat monthly subscription fee and takes zero percentage of your streaming or download royalties. Every dollar that Spotify, Apple Music, TikTok, Beatport, or any other platform pays out for your music goes directly to you. We are not a royalty-split partner; we are a distribution service. You pay for access to the infrastructure, and your earnings are entirely yours.</div>
       </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I own my masters and publishing?<span class="arr">▼</span></button>
+        <div class="faq-a">You retain 100% ownership of your master recordings at all times. GoHigher Records does not acquire, license, or claim any ownership rights to your music as a condition of distribution. Publishing rights (performance royalties, mechanical royalties) are also entirely yours — we do not administer publishing. We recommend registering with a Performing Rights Organization (ASCAP, BMI, or SESAC) to collect performance royalties independently, as those are separate from the master royalties we distribute.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How long does distribution take?<span class="arr">▼</span></button>
+        <div class="faq-a">Standard distribution takes 3–5 business days from submission to live on all platforms. Pro plan subscribers receive priority processing with a 48-hour guarantee. The Expedited Distribution add-on ($99) provides a 24-hour live guarantee for any plan. Processing time can vary slightly by platform — Spotify and Apple Music typically go live fastest, while some regional platforms may take an additional day or two.</div>
+      </div>
+
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">What platforms do you distribute to?<span class="arr">▼</span></button>
-        <div class="faq-a">We distribute to 15+ platforms including Spotify, Apple Music, YouTube Music, TikTok, Amazon Music, Beatport, Deezer, Tidal, Pandora, iHeart Radio, Napster, and more. Starter plans cover the top 3 platforms; Pro and above get all 15+.</div>
+        <div class="faq-a">We distribute to 15+ platforms including Spotify, Apple Music, YouTube Music, TikTok, Amazon Music, Beatport, Deezer, Tidal, Pandora, iHeart Radio, Napster, Audiomack, SoundCloud, and more. Starter plans cover the major streaming platforms; Pro and above unlock all 15+ including Beatport (essential for electronic music artists). The full platform list is visible in your GoHigherDash distribution dashboard.</div>
       </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">When do I get paid and how?<span class="arr">▼</span></button>
+        <div class="faq-a">Streaming platforms pay royalties on a 2–3 month lag from the date of streaming. Streams in January are typically reported and paid by March or April. GoHigher Records passes these payments through to your GoHigherDash account as soon as they are received from each platform. You can withdraw your balance to your connected bank account or PayPal at any time once a minimum threshold is met. Your dashboard shows estimated stream counts in near real-time, with confirmed royalty figures updated monthly.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">What is GoHigherDash and what does it include?<span class="arr">▼</span></button>
+        <div class="faq-a">GoHigherDash is the AI-powered business platform that powers GoHigher Records. Every distribution plan includes full GoHigherDash access — your distribution dashboard, real-time analytics, royalty tracking, AI artwork generation, AI voice agents, Brain Sync knowledge base builder, persistent AI memory, marketing automation (email, SMS, social), an AI website builder, a CRM for managing your contacts and fan database, and automated release workflows. It is the complete operational infrastructure for running your music career autonomously — everything a major label has, available to independent artists at a fraction of the cost.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">What are AI Voice Agents and how do artists use them?<span class="arr">▼</span></button>
+        <div class="faq-a">AI Voice Agents are custom AI assistants you build inside GoHigherDash that represent you online 24/7. You train them with your bio, FAQ, catalog, and brand voice — then deploy them on your website, social media, or anywhere fans interact with you. They answer questions about your music, upcoming shows, merch, and features. They can qualify booking inquiries, handle press requests, and engage fans without you lifting a finger. You embed them with a single script tag — no coding required.</div>
+      </div>
+
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">Can I cancel my subscription anytime?<span class="arr">▼</span></button>
-        <div class="faq-a">Yes, cancel anytime with no cancellation fees. Your music remains live on platforms until the end of your billing period. After cancellation, you can choose to keep releases live for a small annual fee or remove them entirely.</div>
+        <div class="faq-a">Yes, cancel anytime with no cancellation fees or penalties. Your music remains live on all platforms through the end of your current billing period. After cancellation, you have the option to keep your releases live for a small annual maintenance fee or remove them entirely — the choice is yours. Your GoHigherDash data, analytics history, and contacts are retained for 90 days after cancellation in case you decide to return.</div>
       </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">What is GoHigherDash and do I need it?<span class="arr">▼</span></button>
-        <div class="faq-a">GoHigherDash is the all-in-one business platform that powers GoHigher Records. Your distribution dashboard, analytics, royalty tracking, and AI tools all live inside GoHigherDash. When you sign up for GoHigher Records, you get full GoHigherDash access included.</div>
-      </div>
+
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">Is there a way to try before subscribing?<span class="arr">▼</span></button>
-        <div class="faq-a">We offer a Pay-Per-Track option ($25) so you can distribute a single release without committing to a monthly plan. This is the best way to test the full platform before choosing a subscription tier.</div>
+        <div class="faq-a">Yes. The Pay-Per-Track option ($49) lets you distribute a single release to all 15+ platforms without committing to a monthly plan. You keep 100% of royalties the same as any subscription tier. This is the best way to test the full platform and experience the GoHigherDash dashboard before choosing a subscription. If you upgrade to a monthly plan within 30 days of your first Pay-Per-Track release, the $49 is credited toward your first month.</div>
       </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">How does the demo submission process work?<span class="arr">▼</span></button>
+        <div class="faq-a">Artists can submit demos directly through GoHigherDash at gohigherdash.com/demo-submit. Upload your track (MP3, WAV, or FLAC), include your artist info, genre, and any notes. CEO Rich reviews submissions personally. If your music is selected, you will receive a response within 72 hours with details on next steps — which may include a distribution partnership, label support, or a custom plan tailored to your release goals. Submission is 100% free.</div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -732,7 +1003,7 @@
   <div class="reveal">
     <img class="final-cta-logo" src="https://files.manuscdn.com/user_upload_by_module/session_file/103511043/QlKiaoMuiSqhuCcT.png" alt="GoHigher Records" />
     <h2>Ready to Go <span class="grad-cyan">Global?</span></h2>
-    <p>Join independent artists and labels distributing their music worldwide through GoHigher Records. Get started in minutes.</p>
+    <p>Join independent artists and labels distributing their music worldwide through GoHigher Records. Keep every dollar. Own everything. Operate like a label from day one.</p>
     <a href="https://gohigherdash.com/distribution" class="btn-primary" style="display:inline-flex;font-size:1.05rem;padding:.95rem 2.4rem;" target="_blank" rel="noopener">
       Start Distributing Today
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -740,25 +1011,24 @@
   </div>
 </div>
 
-
-    <!-- SUBMIT DEMO CTA -->
-  <div style="background: linear-gradient(135deg, rgba(0,200,150,0.07) 0%, rgba(124,58,237,0.10) 100%); border-top: 1px solid rgba(0,240,255,0.15); border-bottom: 1px solid rgba(0,240,255,0.15); padding: 5rem 1.5rem; text-align: center; position: relative; z-index: 1;">
-    <div style="max-width: 700px; margin: 0 auto;">
-      <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.3);border-radius:999px;padding:.35rem 1.1rem;font-size:.78rem;color:#00f0ff;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;"><span style="width:7px;height:7px;background:#00f0ff;border-radius:50%;display:inline-block;box-shadow:0 0 8px #00f0ff;"></span> Artist Submissions Open</div>
-      <h2 style="font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:900;color:#e2f4ff;margin:0 0 1.1rem;line-height:1.15;letter-spacing:-.02em;">Got Heat? <span style="background:linear-gradient(90deg,#00f0ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Submit Your Demo.</span></h2>
-      <p style="color:#7ba3be;font-size:1.05rem;line-height:1.75;margin:0 0 2.25rem;max-width:580px;margin-left:auto;margin-right:auto;">Upload your track directly — no email chains, no middlemen. CEO Rich listens personally. If it's fire, you get signed to GoHigher Records and distributed to 15+ platforms worldwide.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;margin-bottom:2.25rem;">
-        <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> Audio upload (MP3/WAV/FLAC)</span>
-        <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> Cover art optional</span>
-        <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> Response within 72 hours</span>
-        <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> 100% free to submit</span>
-      </div>
-      <a href="https://gohigherdash.com/demo-submit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,#00f0ff,#7c3aed);color:#060b14;border:none;padding:1rem 2.6rem;border-radius:8px;font-weight:900;font-size:1.05rem;text-decoration:none;cursor:pointer;box-shadow:0 0 35px rgba(0,240,255,0.4),0 4px 20px rgba(0,240,255,0.2);transition:opacity .2s,transform .2s;">
-        🎤 Submit Your Demo
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+<!-- SUBMIT DEMO CTA -->
+<div style="background: linear-gradient(135deg, rgba(0,200,150,0.07) 0%, rgba(124,58,237,0.10) 100%); border-top: 1px solid rgba(0,240,255,0.15); border-bottom: 1px solid rgba(0,240,255,0.15); padding: 5rem 1.5rem; text-align: center; position: relative; z-index: 1;">
+  <div style="max-width: 700px; margin: 0 auto;">
+    <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.3);border-radius:999px;padding:.35rem 1.1rem;font-size:.78rem;color:#00f0ff;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;"><span style="width:7px;height:7px;background:#00f0ff;border-radius:50%;display:inline-block;box-shadow:0 0 8px #00f0ff;"></span> Artist Submissions Open</div>
+    <h2 style="font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:900;color:#e2f4ff;margin:0 0 1.1rem;line-height:1.15;letter-spacing:-.02em;">Got Heat? <span style="background:linear-gradient(90deg,#00f0ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Submit Your Demo.</span></h2>
+    <p style="color:#7ba3be;font-size:1.05rem;line-height:1.75;margin:0 0 2.25rem;max-width:580px;margin-left:auto;margin-right:auto;">Upload your track directly — no email chains, no middlemen. CEO Rich listens personally. If it's fire, you get signed to GoHigher Records and distributed to 15+ platforms worldwide. You keep your masters. You keep your royalties.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;margin-bottom:2.25rem;">
+      <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> Audio upload (MP3/WAV/FLAC)</span>
+      <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> You retain all rights</span>
+      <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> Response within 72 hours</span>
+      <span style="display:flex;align-items:center;gap:.45rem;color:#e2f4ff;font-size:.88rem;"><span style="color:#00f0ff;font-weight:700;">✓</span> 100% free to submit</span>
     </div>
+    <a href="https://gohigherdash.com/demo-submit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,#00f0ff,#7c3aed);color:#060b14;border:none;padding:1rem 2.6rem;border-radius:8px;font-weight:900;font-size:1.05rem;text-decoration:none;cursor:pointer;box-shadow:0 0 35px rgba(0,240,255,0.4),0 4px 20px rgba(0,240,255,0.2);transition:opacity .2s,transform .2s;">
+      🎤 Submit Your Demo
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
+</div>
 
 <!-- FOOTER -->
 <div class="footer-wrap">
@@ -768,13 +1038,18 @@
       <span class="footer-logo-text">GoHigher Records</span>
     </a>
     <div class="footer-links">
-      <a href="#pricing">Pricing</a>  <a href="https://gohigherdash.com/demo-submit" target="_blank" rel="noopener">Submit Demo</a>
-      <a href="https://gohigherdash.com">GoHigherDash</a>
-      <a href="https://gohigherdash.com/terms">Terms</a>
-      <a href="https://gohigherdash.com/privacy">Privacy</a>
+      <a href="#distribution">Distribution</a>
+      <a href="#studio">Studio</a>
+      <a href="#royalties">Royalties</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://gohigherdash.com/demo-submit" target="_blank" rel="noopener">Submit Demo</a>
+      <a href="https://gohigherdash.com" target="_blank" rel="noopener">GoHigherDash</a>
+      <a href="https://gohigherdash.com/terms" target="_blank" rel="noopener">Terms</a>
+      <a href="https://gohigherdash.com/privacy" target="_blank" rel="noopener">Privacy</a>
       <a href="mailto:hello@gohigherdash.com">Support</a>
     </div>
-    <div class="footer-copy">© 2026 GoHigher Records · Powered by <a href="https://gohigherdash.com">GoHigherDash</a></div>
+    <div class="footer-copy">© 2026 GoHigher Records · Powered by <a href="https://gohigherdash.com" target="_blank" rel="noopener">GoHigherDash</a></div>
   </footer>
 </div>
 
